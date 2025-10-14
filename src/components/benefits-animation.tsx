@@ -52,12 +52,6 @@ const Car = () => (
     </svg>
   );
 
-const Checkpoint = ({ active }: { active: boolean }) => (
-  <div className={cn("w-4 h-4 rounded-full border-2 border-primary bg-background transition-all duration-500", active && "bg-primary shadow-lg shadow-primary/50")}></div>
-);
-
-const checkpoints = [0.25, 0.5, 0.75, 1.0];
-
 const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
@@ -108,7 +102,7 @@ const BenefitsAnimation = () => {
         clearInterval(intervalRef.current);
       }
     };
-  }, [isInView, totalDuration]);
+  }, [isInView]);
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
@@ -121,14 +115,6 @@ const BenefitsAnimation = () => {
           className="absolute top-0 left-0"
         >
           <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
-          
-          <g>
-            {checkpoints.map((cp, index) => (
-               <foreignObject key={index} x={cp * 100} y="30" width="20" height="20" transform="translate(-2, -10)">
-                  <Checkpoint active={activeBenefit >= index + 1} />
-               </foreignObject>
-            ))}
-          </g>
         </svg>
 
         {isInView && (
