@@ -69,9 +69,9 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="py-24 sm:py-32 space-y-24 sm:space-y-32">
+        <div className="py-24 sm:py-32 space-y-24 sm:space-y-32 overflow-x-hidden">
           {/* How it works 1: Sellers list excess energy */}
-          <section className="mx-auto max-w-7xl px-6 lg:px-8 overflow-hidden">
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left">
                 <div>
@@ -84,7 +84,7 @@ export default function Home() {
                     </p>
                 </div>
                 </FadeIn>
-                <FadeIn direction="right">
+                <FadeIn direction="right" delay={200}>
                   <div className="aspect-[3/2] w-full max-w-lg mx-auto">
                       {featureSell && (
                       <Image 
@@ -102,7 +102,7 @@ export default function Home() {
           </section>
 
           {/* How it works 2: Buyers subscribe to local sources */}
-          <section className="mx-auto max-w-7xl px-6 lg:px-8 overflow-hidden">
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                 <FadeIn direction="right">
                   <div className="lg:order-last">
@@ -115,7 +115,7 @@ export default function Home() {
                       </p>
                   </div>
                 </FadeIn>
-                <FadeIn direction="left">
+                <FadeIn direction="left" delay={200}>
                   <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                       {featureBuy && (
                       <Image 
@@ -133,7 +133,7 @@ export default function Home() {
           </section>
 
            {/* How it works 3: Energy flows through the grid */}
-          <section className="mx-auto max-w-7xl px-6 lg:px-8 overflow-hidden">
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left">
                 <div>
@@ -146,7 +146,7 @@ export default function Home() {
                     </p>
                 </div>
                </FadeIn>
-               <FadeIn direction="right">
+               <FadeIn direction="right" delay={200}>
                 <div className="aspect-[3/2] w-full max-w-lg mx-auto">
                     {smartGrid && (
                     <Image 
@@ -164,7 +164,7 @@ export default function Home() {
           </section>
 
            {/* How it works 4: Build a resilient community */}
-          <section className="mx-auto max-w-7xl px-6 lg:px-8 overflow-hidden">
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="right">
                 <div className="lg:order-last">
@@ -177,7 +177,7 @@ export default function Home() {
                     </p>
                 </div>
                </FadeIn>
-               <FadeIn direction="left">
+               <FadeIn direction="left" delay={200}>
                 <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                     {solarFarm && (
                     <Image 

@@ -10,16 +10,23 @@ interface FadeInProps {
   className?: string;
   delay?: number;
   direction?: AnimationDirection;
+  threshold?: number;
 }
 
-const directionClasses: Record<AnimationDirection, string> = {
-  up: "translate-y-8",
-  down: "-translate-y-8",
-  left: "translate-x-8",
-  right: "-translate-x-8",
+const directionClasses: Record<AnimationDirection, { initial: string; final: string }> = {
+  up: { initial: "translate-y-16", final: "translate-y-0" },
+  down: { initial: "-translate-y-16", final: "translate-y-0" },
+  left: { initial: "translate-x-16", final: "translate-x-0" },
+  right: { initial: "-translate-x-16", final: "translate-x-0" },
 };
 
-const FadeIn: React.FC<FadeInProps> = ({ children, className, delay = 0, direction = "up" }) => {
+const FadeIn: React.FC<FadeInProps> = ({ 
+  children, 
+  className, 
+  delay = 0, 
+  direction = "up",
+  threshold = 0.15
+}) => {
   const [isVisible, setIsVisible] = useState(false);
   const domRef = useRef<HTMLDivElement>(null);
 
@@ -27,13 +34,11 @@ const FadeIn: React.FC<FadeInProps> = ({ children, className, delay = 0, directi
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setIsVisible(true);
-            // No need to unobserve, we want it to stay visible
-          }
+          // Set visibility based on whether the element is intersecting
+          setIsVisible(entry.isIntersecting);
         });
       },
-      { threshold: 0.1 }
+      { threshold }
     );
 
     const { current } = domRef;
@@ -46,19 +51,21 @@ const FadeIn: React.FC<FadeInProps> = ({ children, className, delay = 0, directi
         observer.unobserve(current);
       }
     };
-  }, []);
+  }, [threshold]);
 
-  const startingPositionClass = directionClasses[direction];
+  const animationConfig = directionClasses[direction];
 
   return (
     <div
       ref={domRef}
       className={cn(
-        "transition-all duration-1000 ease-out",
-        isVisible ? "opacity-100 translate-x-0 translate-y-0" : `opacity-0 ${startingPositionClass}`,
+        "transition-all duration-1000 ease-in-out",
+        isVisible 
+          ? `opacity-100 scale-100 ${animationConfig.final}`
+          : `opacity-0 scale-95 ${animationConfig.initial}`,
         className
       )}
-      style={{ transitionDelay: `${delay}ms` }}
+      style={{ transitionDelay: isVisible ? `${delay}ms` : '0ms' }}
     >
       {children}
     </div>
