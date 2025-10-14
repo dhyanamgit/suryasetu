@@ -35,6 +35,7 @@ const Car = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="overflow-visible"
+    style={{ transform: "translateY(-4px)" }}
   >
     <g transform="translate(0, -4)">
       <path
@@ -57,9 +58,10 @@ const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const roadContainerRef = useRef<HTMLDivElement>(null);
+  const [roadPath, setRoadPath] = useState("M0,10 L0,10");
   const intervalRef = useRef<NodeJS.Timeout>();
 
-  const roadPath = "M0,10 L100,10";
   const totalDuration = 1; // seconds
 
   useEffect(() => {
@@ -75,6 +77,16 @@ const BenefitsAnimation = () => {
       observer.observe(currentRef);
     }
 
+    const handleResize = () => {
+        if (roadContainerRef.current) {
+            const width = roadContainerRef.current.offsetWidth;
+            setRoadPath(`M0,10 L${width},10`);
+        }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial calculation
+
     return () => {
       if (currentRef) {
         observer.unobserve(currentRef);
@@ -82,6 +94,7 @@ const BenefitsAnimation = () => {
       if (intervalRef.current) {
         clearInterval(intervalRef.current);
       }
+      window.removeEventListener('resize', handleResize);
     };
   }, []);
 
@@ -108,12 +121,10 @@ const BenefitsAnimation = () => {
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
-      <div className="relative w-full h-[20px]">
+      <div ref={roadContainerRef} className="relative w-full h-[20px]">
         <svg
           width="100%"
           height="20"
-          viewBox="0 0 100 20"
-          preserveAspectRatio="none"
           className="absolute top-0 left-0"
         >
           <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
@@ -125,7 +136,6 @@ const BenefitsAnimation = () => {
             style={{
                 offsetPath: `path('${roadPath}')`,
                 animationDuration: `${totalDuration}s`,
-                transform: 'translateY(-17px)'
             }}
             >
               <Car />
