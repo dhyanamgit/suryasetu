@@ -59,7 +59,7 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const animationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
-  const roadPath = "M 20 50 C 150 50 150 120 300 120 C 450 120 450 50 600 50 C 750 50 750 120 900 120";
+  const roadPath = "M 0 50 L 920 50";
   const totalDuration = 10; // seconds
 
   useEffect(() => {
@@ -123,23 +123,23 @@ const BenefitsAnimation = () => {
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 920 170"
+          viewBox="0 0 920 100"
           preserveAspectRatio="xMidYMid meet"
           className="absolute top-0 left-0"
         >
           <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
           
           <g>
-            <foreignObject x="25%" y="40%" width="20" height="20" transform="translate(-10, -50)">
+            <foreignObject x="25%" y="40" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 1} />
             </foreignObject>
-             <foreignObject x="48%" y="55%" width="20" height="20" transform="translate(0, -60)">
+             <foreignObject x="50%" y="40" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 2} />
             </foreignObject>
-             <foreignObject x="73%" y="40%" width="20" height="20" transform="translate(-10, -50)">
+             <foreignObject x="75%" y="40" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 3} />
             </foreignObject>
-             <foreignObject x="98%" y="55%" width="20" height="20" transform="translate(0, -60)">
+             <foreignObject x="100%" y="40" width="20" height="20" transform="translate(-20, -10)">
                <Checkpoint active={activeBenefit >= 4} />
             </foreignObject>
           </g>
