@@ -1,3 +1,4 @@
+
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -75,6 +76,7 @@ const BenefitsAnimation = () => {
   const [roadLine, setRoadLine] = useState("M0,10 L0,10");
   const [animationFinished, setAnimationFinished] = useState(false);
   const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
+  const [isClient, setIsClient] = useState(false);
 
   const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -87,8 +89,14 @@ const BenefitsAnimation = () => {
       setIsPopupOpen(true);
     }
   };
+  
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
 
   useEffect(() => {
+    if (!isClient) return;
+
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting);
@@ -121,9 +129,11 @@ const BenefitsAnimation = () => {
       timeoutRefs.current.forEach(clearTimeout);
       window.removeEventListener('resize', handleResize);
     };
-  }, []);
+  }, [isClient]);
 
   useEffect(() => {
+    if (!isClient) return;
+
     timeoutRefs.current.forEach(clearTimeout);
     
     if (isInView) {
@@ -154,7 +164,11 @@ const BenefitsAnimation = () => {
     return () => {
       timeoutRefs.current.forEach(clearTimeout);
     };
-  }, [isInView]);
+  }, [isInView, isClient]);
+
+  if (!isClient) {
+    return null; // Or a placeholder/skeleton
+  }
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
@@ -243,3 +257,5 @@ const BenefitsAnimation = () => {
 };
 
 export default BenefitsAnimation;
+
+    

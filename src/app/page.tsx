@@ -1,4 +1,6 @@
 
+"use client";
+
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
@@ -8,8 +10,15 @@ import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import FadeIn from '@/components/ui/fade-in';
 import BenefitsAnimation from '@/components/benefits-animation';
+import { useEffect, useState } from 'react';
 
 export default function Home() {
+  const [year, setYear] = useState<number | null>(null);
+
+  useEffect(() => {
+    setYear(new Date().getFullYear());
+  }, []);
+
 
   const featureSell = PlaceHolderImages.find(p => p.id === 'feature-sell');
   const featureBuy = PlaceHolderImages.find(p => p.id === 'feature-buy');
@@ -225,7 +234,7 @@ export default function Home() {
           </div>
           <div className="mt-8 md:order-1 md:mt-0">
             <p className="text-center text-xs leading-5 text-muted-foreground">
-              &copy; {new Date().getFullYear()} SuryaSetu, Inc. All rights reserved.
+              &copy; {year} SuryaSetu, Inc. All rights reserved.
             </p>
           </div>
         </div>
@@ -233,3 +242,5 @@ export default function Home() {
     </div>
   );
 }
+
+    
