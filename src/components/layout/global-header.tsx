@@ -1,7 +1,7 @@
 
 "use client";
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '@/components/logo';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
@@ -9,6 +9,12 @@ import { useAuth } from '@/hooks/use-auth';
 
 export default function GlobalHeader() {
   const { user, loading } = useAuth();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
 
   return (
     <header className="sticky top-0 z-50 border-b bg-background">
@@ -19,7 +25,7 @@ export default function GlobalHeader() {
             </Link>
           </div>
           <div className="flex lg:flex-1 lg:justify-end gap-x-4">
-            {!loading && (
+            {isClient && !loading && (
               <>
                 {user ? (
                     <Button asChild>
