@@ -7,6 +7,7 @@ import AnimatedHeroBackground from '@/components/animated-hero-background';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import FadeIn from '@/components/ui/fade-in';
+import BenefitsAnimation from '@/components/benefits-animation';
 
 export default function Home() {
 
@@ -106,7 +107,7 @@ export default function Home() {
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                 <FadeIn direction="left" delay={200} rotate>
-                  <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
+                  <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-last">
                       {featureBuy && (
                       <Image 
                           src={featureBuy.imageUrl}
@@ -120,7 +121,7 @@ export default function Home() {
                   </div>
                 </FadeIn>
                 <FadeIn direction="right" rotate>
-                  <div className="lg:order-last">
+                  <div className="lg:order-first">
                       <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
                       <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                       Buyers Access Clean Power
@@ -168,7 +169,7 @@ export default function Home() {
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left" delay={200} rotate>
-                <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
+                <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-last">
                     {solarFarm && (
                     <Image 
                         src={solarFarm.imageUrl}
@@ -182,7 +183,7 @@ export default function Home() {
                 </div>
                </FadeIn>
                <FadeIn direction="right" rotate>
-                <div className="lg:order-last">
+                <div className="lg:order-first">
                     <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                     Join a Decentralized Network
@@ -195,6 +196,26 @@ export default function Home() {
             </div>
           </section>
         </div>
+
+        <div className="py-24 sm:py-32">
+            <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                <FadeIn>
+                    <div className="mx-auto max-w-2xl lg:text-center">
+                        <h2 className="text-base font-semibold leading-7 text-accent">Our Benefits</h2>
+                        <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                        Drive Towards a Greener Future
+                        </p>
+                        <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                        Discover the advantages of joining a community-powered energy grid. It's more than just electricity; it's a movement.
+                        </p>
+                    </div>
+                </FadeIn>
+                <div className="mt-16">
+                    <BenefitsAnimation />
+                </div>
+            </div>
+        </div>
+
       </main>
 
       <footer className="border-t">
