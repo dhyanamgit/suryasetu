@@ -28,30 +28,30 @@ const benefits = [
 ];
 
 const Car = () => (
-  <svg
-    width="50"
-    height="20"
-    viewBox="0 0 50 20"
-    fill="none"
-    xmlns="http://www.w3.org/2000/svg"
-    className="overflow-visible"
-  >
-    <g transform="translate(0, 1)">
-      <path
-        d="M5.192 10.744h39.616c0-4.95-3.6-8.96-8-8.96H13.192c-4.4 0-8 4.01-8 8.96z"
-        className="fill-card stroke-primary"
-        strokeWidth="1.5"
-      />
-      <path
-        d="M10.192 1.784l5 8.96h20l5-8.96"
-        className="fill-primary/50 stroke-primary"
-        strokeWidth="1.5"
-      />
-      <circle cx="10.192" cy="14.754" r="3" className="fill-foreground" />
-      <circle cx="40.192" cy="14.754" r="3" className="fill-foreground" />
-    </g>
-  </svg>
-);
+    <svg
+      width="50"
+      height="20"
+      viewBox="0 0 50 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className="overflow-visible"
+    >
+      <g transform="translate(0, 0)">
+        <path
+          d="M5.192 10.744h39.616c0-4.95-3.6-8.96-8-8.96H13.192c-4.4 0-8 4.01-8 8.96z"
+          className="fill-card stroke-primary"
+          strokeWidth="1.5"
+        />
+        <path
+          d="M10.192 1.784l5 8.96h20l5-8.96"
+          className="fill-primary/50 stroke-primary"
+          strokeWidth="1.5"
+        />
+        <circle cx="10.192" cy="14.754" r="3" className="fill-foreground" />
+        <circle cx="40.192" cy="14.754" r="3" className="fill-foreground" />
+      </g>
+    </svg>
+  );
 
 const Checkpoint = ({ active }: { active: boolean }) => (
   <div className={cn("w-4 h-4 rounded-full border-2 border-primary bg-background transition-all duration-500", active && "bg-primary shadow-lg shadow-primary/50")}></div>
@@ -102,8 +102,6 @@ const BenefitsAnimation = () => {
         setActiveBenefit(prev => {
             const next = prev + 1;
             if (next > benefits.length) {
-                // To make it loop, we reset it.
-                // If you don't want it to loop, clear the interval here.
                 return 0; 
             }
             return next;
