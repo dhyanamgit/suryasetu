@@ -130,16 +130,16 @@ const BenefitsAnimation = () => {
           <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
           
           <g>
-            <foreignObject x="25%" y="40" width="20" height="20" transform="translate(-10, -10)">
+            <foreignObject x="25%" y="20" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 1} />
             </foreignObject>
-             <foreignObject x="50%" y="40" width="20" height="20" transform="translate(-10, -10)">
+             <foreignObject x="50%" y="20" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 2} />
             </foreignObject>
-             <foreignObject x="75%" y="40" width="20" height="20" transform="translate(-10, -10)">
+             <foreignObject x="75%" y="20" width="20" height="20" transform="translate(-10, -10)">
                <Checkpoint active={activeBenefit >= 3} />
             </foreignObject>
-             <foreignObject x="100%" y="40" width="20" height="20" transform="translate(-20, -10)">
+             <foreignObject x="100%" y="20" width="20" height="20" transform="translate(-20, -10)">
                <Checkpoint active={activeBenefit >= 4} />
             </foreignObject>
           </g>
@@ -154,7 +154,9 @@ const BenefitsAnimation = () => {
                   animationDuration: `${totalDuration}s`,
                 }}
             >
-                <Car />
+                <div style={{ transform: 'translateY(-17px)' }}>
+                  <Car />
+                </div>
             </div>
         )}
       </div>
