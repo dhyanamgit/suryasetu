@@ -36,7 +36,7 @@ const Car = () => (
       xmlns="http://www.w3.org/2000/svg"
       className="overflow-visible"
     >
-      <g transform="translate(0, -2)">
+      <g transform="translate(0, -4)">
         <path
           d="M5.192 10.744h39.616c0-4.95-3.6-8.96-8-8.96H13.192c-4.4 0-8 4.01-8 8.96z"
           className="fill-card stroke-primary"
