@@ -1,4 +1,3 @@
-
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -34,7 +33,6 @@ const Car = () => (
     viewBox="0 0 50 20"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    className="transform -rotate-6"
   >
     <path
       d="M5.192 10.744h39.616c0-4.95-3.6-8.96-8-8.96H13.192c-4.4 0-8 4.01-8 8.96z"
@@ -59,7 +57,7 @@ const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationTimeoutRef = useRef<NodeJS.Timeout[]>([]);
+  const animationIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const roadPath = "M 20 50 C 150 50 150 120 300 120 C 450 120 450 50 600 50 C 750 50 750 120 900 120";
   const totalDuration = 10; // seconds
@@ -81,33 +79,41 @@ const BenefitsAnimation = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      animationTimeoutRef.current.forEach(clearTimeout);
+      if (animationIntervalRef.current) {
+        clearInterval(animationIntervalRef.current);
+      }
     };
   }, []);
 
   useEffect(() => {
-    animationTimeoutRef.current.forEach(clearTimeout);
-    animationTimeoutRef.current = [];
+    if (animationIntervalRef.current) {
+        clearInterval(animationIntervalRef.current);
+    }
 
     if (isInView) {
       setActiveBenefit(0);
-      const quarterTime = (totalDuration * 1000) / 4;
+      const stepTime = (totalDuration * 1000) / (benefits.length);
       
-      const benefitTimeouts = [
-          setTimeout(() => setActiveBenefit(1), quarterTime * 1),
-          setTimeout(() => setActiveBenefit(2), quarterTime * 2),
-          setTimeout(() => setActiveBenefit(3), quarterTime * 3),
-          setTimeout(() => setActiveBenefit(4), quarterTime * 4),
-      ];
+      const interval = setInterval(() => {
+        setActiveBenefit(prev => {
+            const next = prev + 1;
+            if (next > benefits.length) {
+                return 0; // Loop back to the start
+            }
+            return next;
+        });
+      }, stepTime);
 
-      animationTimeoutRef.current = [...benefitTimeouts];
+      animationIntervalRef.current = interval;
       
     } else {
         setActiveBenefit(0);
     }
 
     return () => {
-      animationTimeoutRef.current.forEach(clearTimeout);
+      if (animationIntervalRef.current) {
+        clearInterval(animationIntervalRef.current);
+      }
     };
   }, [isInView]);
 

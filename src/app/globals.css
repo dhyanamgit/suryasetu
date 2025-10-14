@@ -85,16 +85,14 @@ body {
 
 @keyframes drive {
     from {
-        motion-offset: 0%;
         offset-distance: 0%;
     }
     to {
-        motion-offset: 100%;
         offset-distance: 100%;
     }
 }
 
 .animate-drive {
     animation: drive 10s linear infinite;
-    offset-path: path("M 20 50 C 150 50 150 120 300 120 C 450 120 450 50 600 50 C 750 50 750 120 900 120");
+    offset-rotate: auto;
 }
