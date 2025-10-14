@@ -23,7 +23,7 @@ const Logo = ({ className }: { className?: string }) => {
     <div className={cn("flex items-center gap-2 text-foreground", className)}>
       <button onClick={toggleTheme} className="bg-primary p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 focus:ring-offset-background">
         <span className="sr-only">Toggle theme</span>
-        <Icon className="h-5 w-5 text-primary-foreground" />
+        {mounted && <Icon className="h-5 w-5 text-primary-foreground" />}
       </button>
       <span className="font-bold text-xl font-headline">SuryaSetu</span>
     </div>
