@@ -167,7 +167,7 @@ const BenefitsAnimation = () => {
   }, [isInView, isClient]);
 
   if (!isClient) {
-    return null; // Or a placeholder/skeleton
+    return null;
   }
 
   return (
