@@ -105,17 +105,6 @@ export default function Home() {
           {/* How it works 2: Buyers subscribe to local sources */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-                <FadeIn direction="right" rotate>
-                  <div className="lg:order-last">
-                      <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
-                      <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                      Buyers Access Clean Power
-                      </p>
-                      <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                      Browse local, renewable energy sources and subscribe to a plan that fits your needs and budget. Enjoy cheaper, cleaner electricity without installing your own panels.
-                      </p>
-                  </div>
-                </FadeIn>
                 <FadeIn direction="left" delay={200} rotate>
                   <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                       {featureBuy && (
@@ -128,6 +117,17 @@ export default function Home() {
                           className="rounded-xl shadow-2xl"
                       />
                       )}
+                  </div>
+                </FadeIn>
+                <FadeIn direction="right" rotate>
+                  <div className="lg:order-last">
+                      <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
+                      <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                      Buyers Access Clean Power
+                      </p>
+                      <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                      Browse local, renewable energy sources and subscribe to a plan that fits your needs and budget. Enjoy cheaper, cleaner electricity without installing your own panels.
+                      </p>
                   </div>
                 </FadeIn>
              </div>
@@ -167,17 +167,6 @@ export default function Home() {
            {/* How it works 4: Build a resilient community */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-               <FadeIn direction="right" rotate>
-                <div className="lg:order-last">
-                    <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
-                    <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                    Join a Decentralized Network
-                    </p>
-                    <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                    By participating, you're not just a user—you're a stakeholder in a community-owned energy network, building a more sustainable and resilient future together.
-                    </p>
-                </div>
-               </FadeIn>
                <FadeIn direction="left" delay={200} rotate>
                 <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                     {solarFarm && (
@@ -190,6 +179,17 @@ export default function Home() {
                         className="rounded-xl shadow-2xl"
                     />
                     )}
+                </div>
+               </FadeIn>
+               <FadeIn direction="right" rotate>
+                <div className="lg:order-last">
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
+                    <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                    Join a Decentralized Network
+                    </p>
+                    <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                    By participating, you're not just a user—you're a stakeholder in a community-owned energy network, building a more sustainable and resilient future together.
+                    </p>
                 </div>
                </FadeIn>
             </div>
