@@ -1,4 +1,3 @@
-
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -35,7 +34,6 @@ const Car = () => (
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
     className="overflow-visible"
-    style={{ transform: "translateY(-4px)" }}
   >
     <g transform="translate(0, -4)">
       <path
@@ -59,10 +57,10 @@ const BenefitsAnimation = () => {
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const roadContainerRef = useRef<HTMLDivElement>(null);
-  const [roadPath, setRoadPath] = useState("M0,10 L0,10");
+  const [roadPath, setRoadPath] = useState("M0,10");
   const intervalRef = useRef<NodeJS.Timeout>();
 
-  const totalDuration = 1; // seconds
+  const totalDuration = 2; // seconds
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -76,16 +74,17 @@ const BenefitsAnimation = () => {
     if (currentRef) {
       observer.observe(currentRef);
     }
-
+    
     const handleResize = () => {
         if (roadContainerRef.current) {
             const width = roadContainerRef.current.offsetWidth;
-            setRoadPath(`M0,10 L${width},10`);
+            setRoadPath(`path('M0,10 L${width},10')`);
         }
     }
 
     window.addEventListener('resize', handleResize);
     handleResize(); // Initial calculation
+
 
     return () => {
       if (currentRef) {
@@ -127,14 +126,14 @@ const BenefitsAnimation = () => {
           height="20"
           className="absolute top-0 left-0"
         >
-          <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
+          <path d="M0,10 L100%,10" fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
         </svg>
 
         {isInView && (
           <div
             className="absolute top-0 left-0 w-[50px] h-[20px] animate-drive"
             style={{
-                offsetPath: `path('${roadPath}')`,
+                offsetPath: roadPath,
                 animationDuration: `${totalDuration}s`,
             }}
             >
