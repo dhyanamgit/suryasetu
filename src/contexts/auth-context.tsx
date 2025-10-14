@@ -4,7 +4,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export type UserRole = 'buyer' | 'seller' | 'superadmin';
@@ -22,6 +22,7 @@ interface AuthContextType {
   signIn: (email: string, pass: string) => Promise<any>;
   signUp: (email: string, pass: string, name: string, role: UserRole) => Promise<any>;
   signOut: () => Promise<void>;
+  signInWithGoogle: () => Promise<any>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -47,14 +48,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           };
           setUser(appUser);
         } else {
-          // This case might happen if user is created in Firebase console
-          // but not in our 'users' collection. Defaulting to 'buyer'.
+          // This case happens for new Google sign-ins, or if user is created in Firebase console
+          // but not in our 'users' collection. We default them to 'buyer'.
            const newUser: AppUser = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
             role: 'buyer'
            };
+           // We are creating a user doc here for Google Sign-in users who are new.
            await setDoc(userDocRef, { displayName: firebaseUser.displayName, email: firebaseUser.email, role: 'buyer' });
            setUser(newUser);
         }
@@ -92,13 +94,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const signInWithGoogle = async () => {
+    setLoading(true);
+    const provider = new GoogleAuthProvider();
+    return signInWithPopup(auth, provider).finally(() => setLoading(false));
+  };
+
   const signOut = async () => {
     await firebaseSignOut(auth);
     setUser(null);
     router.push('/login');
   };
 
-  const value = { user, loading, signIn, signUp, signOut };
+  const value = { user, loading, signIn, signUp, signOut, signInWithGoogle };
 
   return (
     <AuthContext.Provider value={value}>

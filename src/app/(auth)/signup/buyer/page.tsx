@@ -1,5 +1,5 @@
 
-import BuyerSignupForm from '@/components/auth/buyer-signup-form';
+import GoogleSignInButton from '@/components/auth/google-signin-button';
 import Logo from '@/components/logo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -12,12 +12,12 @@ export default function BuyerSignupPage() {
             <Logo />
         </div>
         <Card>
-          <CardHeader>
+          <CardHeader className="text-center">
             <CardTitle className="font-headline">Create a Buyer Account</CardTitle>
-            <CardDescription>Start purchasing clean energy from your community.</CardDescription>
+            <CardDescription>Join our community by signing up with Google.</CardDescription>
           </CardHeader>
           <CardContent>
-            <BuyerSignupForm />
+            <GoogleSignInButton />
           </CardContent>
         </Card>
         <p className="text-center text-sm text-muted-foreground mt-6">
@@ -30,5 +30,3 @@ export default function BuyerSignupPage() {
     </div>
   );
 }
-
-    
