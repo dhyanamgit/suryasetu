@@ -10,6 +10,7 @@ interface FadeInProps {
   className?: string;
   delay?: number;
   direction?: AnimationDirection;
+  rotate?: boolean;
   threshold?: number;
 }
 
@@ -25,6 +26,7 @@ const FadeIn: React.FC<FadeInProps> = ({
   className, 
   delay = 0, 
   direction = "up",
+  rotate = false,
   threshold = 0.15
 }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -34,7 +36,6 @@ const FadeIn: React.FC<FadeInProps> = ({
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          // Set visibility based on whether the element is intersecting
           setIsVisible(entry.isIntersecting);
         });
       },
@@ -54,6 +55,8 @@ const FadeIn: React.FC<FadeInProps> = ({
   }, [threshold]);
 
   const animationConfig = directionClasses[direction];
+  const rotateInitial = rotate ? 'transform [transform:perspective(1000px)_rotateX(-20deg)]' : '';
+  const rotateFinal = rotate ? 'transform [transform:perspective(1000px)_rotateX(0deg)]' : '';
 
   return (
     <div
@@ -61,11 +64,11 @@ const FadeIn: React.FC<FadeInProps> = ({
       className={cn(
         "transition-all duration-1000 ease-in-out",
         isVisible 
-          ? `opacity-100 scale-100 ${animationConfig.final}`
-          : `opacity-0 scale-95 ${animationConfig.initial}`,
+          ? `opacity-100 scale-100 ${animationConfig.final} ${rotateFinal}`
+          : `opacity-0 scale-95 ${animationConfig.initial} ${rotateInitial}`,
         className
       )}
-      style={{ transitionDelay: isVisible ? `${delay}ms` : '0ms' }}
+      style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
     </div>
