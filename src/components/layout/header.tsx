@@ -13,7 +13,7 @@ import { Button } from '@/components/ui/button';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { useAuth } from '@/hooks/use-auth';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 
 interface HeaderProps {
   setSidebarOpen: (open: boolean) => void;
@@ -29,8 +29,14 @@ function getTitle(pathname: string, role: string | undefined): string {
 
 export default function Header({ setSidebarOpen }: HeaderProps) {
   const { user, signOut } = useAuth();
+  const router = useRouter();
   const avatarImage = PlaceHolderImages.find((p) => p.id === 'user-avatar');
   const pathname = usePathname();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push('/login');
+  };
 
   const getInitials = (name: string | null | undefined) => {
     if (!name) return 'U';
@@ -107,7 +113,7 @@ export default function Header({ setSidebarOpen }: HeaderProps) {
                 </MenuItem>
                 <MenuItem>
                   <button
-                    onClick={signOut}
+                    onClick={handleSignOut}
                     className="block w-full text-left px-3 py-1 text-sm leading-6 text-foreground"
                   >
                     Sign out
