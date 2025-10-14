@@ -58,7 +58,7 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const roadContainerRef = useRef<HTMLDivElement>(null);
   const [roadPath, setRoadPath] = useState("path('M0,10 L0,10')");
-  const intervalRef = useRef<NodeJS.Timeout>();
+  const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
   const totalDuration = 10; // seconds
 
@@ -91,33 +91,34 @@ const BenefitsAnimation = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      timeoutRefs.current.forEach(clearTimeout);
       window.removeEventListener('resize', handleResize);
     };
   }, []);
 
   useEffect(() => {
+    timeoutRefs.current.forEach(clearTimeout);
+    
     if (isInView) {
       // Start the animation timer
       setActiveBenefit(1); // Light up the first benefit immediately
       const benefitInterval = (totalDuration / benefits.length) * 1000;
-      intervalRef.current = setInterval(() => {
-        // We start from 2 since 1 is already active
-        setActiveBenefit(prev => (prev >= benefits.length ? 1 : prev + 1));
-      }, benefitInterval);
+      
+      benefits.forEach((_, index) => {
+        if (index > 0) { // The first one is already active
+            const timeout = setTimeout(() => {
+                setActiveBenefit(index + 1);
+            }, benefitInterval * index);
+            timeoutRefs.current.push(timeout);
+        }
+      });
+
     } else {
         setActiveBenefit(0);
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-        }
     }
 
     return () => {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
+      timeoutRefs.current.forEach(clearTimeout);
     };
   }, [isInView]);
 

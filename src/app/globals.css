@@ -93,6 +93,6 @@ body {
 }
 
 .animate-drive {
-    animation: drive 10s linear infinite;
+    animation: drive 10s linear forwards;
     offset-rotate: auto;
 }
