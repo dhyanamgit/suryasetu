@@ -1,12 +1,9 @@
 import { Button } from '@/components/ui/button';
-import { PlaceHolderImages } from '@/lib/placeholder-images';
 import { ArrowRight, Zap, DollarSign, Leaf } from 'lucide-react';
-import Image from 'next/image';
 import Link from 'next/link';
 import Logo from '@/components/logo';
 
 export default function Home() {
-  const heroImage = PlaceHolderImages.find(p => p.id === 'smart-grid');
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -24,27 +21,28 @@ export default function Home() {
       </header>
       
       <main className="flex-grow">
-        <div className="relative isolate pt-14">
-           <div
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
-          >
-            <div
-              style={{
-                clipPath:
-                  'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
-              }}
-              className="relative left-[calc(50%-11rem)] aspect-[1155/678] w-[36.125rem] -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#a7f3d0] to-[#34d399] opacity-10 sm:left-[calc(50%-30rem)] sm:w-[72.1875rem]"
-            />
+        <div className="relative isolate pt-14 h-[70vh] flex items-center justify-center">
+          <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
+            <video
+              className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2"
+              autoPlay
+              loop
+              muted
+              playsInline
+            >
+              <source src="https://storage.googleapis.com/fsm-prod-media/sundaysgrid/solar_panel_video.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+            <div className="absolute inset-0 bg-black/60"></div>
           </div>
           
           <div className="py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-4xl text-center">
-                <h1 className="text-4xl font-bold tracking-tight text-foreground sm:text-7xl font-headline">
+                <h1 className="text-4xl font-bold tracking-tight text-white sm:text-7xl font-headline">
                   The future of the grid is decentralized
                 </h1>
-                <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                <p className="mt-6 text-lg leading-8 text-neutral-300">
                   SundayGrids is a platform for peer-to-peer energy trading. We connect homeowners who have excess solar power with those who want to buy it.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
@@ -53,20 +51,6 @@ export default function Home() {
                   </Button>
                 </div>
               </div>
-              {heroImage && (
-                <div className="mt-16 flow-root sm:mt-24">
-                    <div className="-m-2 rounded-xl bg-gray-900/5 p-2 ring-1 ring-inset ring-gray-900/10 lg:-m-4 lg:rounded-2xl lg:p-4">
-                    <Image
-                        src={heroImage.imageUrl}
-                        alt={heroImage.description}
-                        data-ai-hint={heroImage.imageHint}
-                        width={2432}
-                        height={1442}
-                        className="rounded-md shadow-2xl ring-1 ring-gray-900/10"
-                    />
-                    </div>
-                </div>
-              )}
             </div>
           </div>
         </div>
