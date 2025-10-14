@@ -1,13 +1,13 @@
 
 "use client";
 
-import type {Metadata} from 'next';
 import './globals.css';
 import { AuthProvider } from '@/contexts/auth-context';
 import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 import GlobalHeader from '@/components/layout/global-header';
 import { usePathname } from 'next/navigation';
+import { ClientOnly } from '@/components/client-only';
 
 
 export default function RootLayout({
@@ -28,18 +28,20 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&family=Lexend:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body antialiased">
-        <ThemeProvider
-            attribute="class"
-            defaultTheme="dark"
-            enableSystem
-            disableTransitionOnChange
-        >
-            <AuthProvider>
-              {!isAppRoute && <GlobalHeader />}
-              {children}
-            </AuthProvider>
-            <Toaster />
-        </ThemeProvider>
+        <ClientOnly>
+          <ThemeProvider
+              attribute="class"
+              defaultTheme="dark"
+              enableSystem
+              disableTransitionOnChange
+          >
+              <AuthProvider>
+                {!isAppRoute && <GlobalHeader />}
+                {children}
+              </AuthProvider>
+              <Toaster />
+          </ThemeProvider>
+        </ClientOnly>
       </body>
     </html>
   );
