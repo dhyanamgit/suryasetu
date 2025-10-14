@@ -21,19 +21,21 @@ import { Loader2 } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 const formSchema = z.object({
+  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
   email: z.string().email({ message: 'Invalid email address.' }),
   password: z.string().min(6, { message: 'Password must be at least 6 characters.' }),
 });
 
-export default function LoginForm() {
+export default function SellerSignupForm() {
   const [isLoading, setIsLoading] = useState(false);
-  const { signIn } = useAuth();
+  const { signUp } = useAuth();
   const router = useRouter();
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -42,17 +44,17 @@ export default function LoginForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsLoading(true);
     try {
-      await signIn(values.email, values.password);
+      await signUp(values.email, values.password, values.name, 'seller');
       toast({
-        title: "Login Successful",
+        title: "Account Created",
         description: "Redirecting to your dashboard...",
       });
       router.push('/dashboard');
     } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
+       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
       toast({
         variant: "destructive",
-        title: "Login Failed",
+        title: "Sign-up Failed",
         description: errorMessage,
       });
       setIsLoading(false);
@@ -62,6 +64,19 @@ export default function LoginForm() {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <FormField
+          control={form.control}
+          name="name"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Full Name or Company</FormLabel>
+              <FormControl>
+                <Input placeholder="e.g., Jane Doe or Energy Corp" {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="email"
@@ -89,7 +104,7 @@ export default function LoginForm() {
           )}
         />
         <Button type="submit" className="w-full" disabled={isLoading}>
-          {isLoading ? <Loader2 className="animate-spin" /> : 'Log In'}
+          {isLoading ? <Loader2 className="animate-spin" /> : 'Create Account'}
         </Button>
       </form>
     </Form>
