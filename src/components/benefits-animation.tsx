@@ -59,7 +59,7 @@ const BenefitsAnimation = () => {
   const intervalRef = useRef<NodeJS.Timeout>();
 
   const roadPath = "M 0 50 L 100 50";
-  const totalDuration = 8; // seconds
+  const totalDuration = 6; // seconds
 
   useEffect(() => {
     const observer = new IntersectionObserver(
