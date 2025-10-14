@@ -59,31 +59,60 @@ const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
+  const animationTimeoutRef = useRef<NodeJS.Timeout[]>([]);
+
+  const roadPath = "M 20 50 C 150 50 150 120 300 120 C 450 120 450 50 600 50 C 750 50 750 120 900 120";
+  const totalDuration = 10; // seconds
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
         setIsInView(entry.isIntersecting);
-        if(!entry.isIntersecting) {
-            setActiveBenefit(0);
-        }
       },
       { threshold: 0.3 }
     );
 
-    if (containerRef.current) {
-      observer.observe(containerRef.current);
+    const currentRef = containerRef.current;
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (containerRef.current) {
-        observer.unobserve(containerRef.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
+      // Clear any running timeouts when the component unmounts
+      animationTimeoutRef.current.forEach(clearTimeout);
     };
   }, []);
 
-  const roadPath = "M 20 50 C 150 50 150 120 300 120 C 450 120 450 50 600 50 C 750 50 750 120 900 120";
-  const totalDuration = 10; // seconds
+  useEffect(() => {
+    // Clear previous timeouts if isInView changes
+    animationTimeoutRef.current.forEach(clearTimeout);
+    animationTimeoutRef.current = [];
+
+    if (isInView) {
+      // Set initial state
+      setActiveBenefit(0);
+
+      // Schedule state updates based on animation progress
+      const quarterTime = (totalDuration * 1000) / 4;
+      for (let i = 1; i <= 4; i++) {
+        const timeout = setTimeout(() => {
+          setActiveBenefit(i);
+        }, quarterTime * i);
+        animationTimeoutRef.current.push(timeout);
+      }
+    } else {
+        // Reset when not in view
+        setActiveBenefit(0);
+    }
+
+    // Cleanup function to clear timeouts if the component unmounts or isInView changes again
+    return () => {
+      animationTimeoutRef.current.forEach(clearTimeout);
+    };
+  }, [isInView]);
 
   return (
     <div ref={containerRef} className="w-full space-y-16 overflow-hidden">
@@ -117,7 +146,7 @@ const BenefitsAnimation = () => {
           {/* Car Animation */}
           {isInView && (
              <foreignObject width="50" height="20">
-                <animatemotion
+                <animateMotion
                   dur={`${totalDuration}s`}
                   begin="0s"
                   fill="freeze"
@@ -125,24 +154,7 @@ const BenefitsAnimation = () => {
                   rotate="auto"
                 >
                   <mpath href="#road" />
-                </animatemotion>
-                <animate
-                  attributeName="opacity"
-                  from="0" to="1"
-                  dur="1s"
-                  begin="0s"
-                  fill="freeze"
-                />
-                {/* Trigger benefit changes */}
-                <animate
-                    begin="0s" attributeName="visibility" from="hidden" to="visible" dur={`${totalDuration}s`} fill="freeze"
-                    onbegin={() => setActiveBenefit(0)}
-                />
-                <animatemotion dur={`${totalDuration*0.25}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(1)}><mpath href="#road" /></animatemotion>
-                <animatemotion dur={`${totalDuration*0.5}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(2)}><mpath href="#road" /></animatemotion>
-                <animatemotion dur={`${totalDuration*0.75}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(3)}><mpath href="#road" /></animatemotion>
-                <animatemotion dur={`${totalDuration}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(4)}><mpath href="#road" /></animatemotion>
-
+                </animateMotion>
                 <Car />
             </foreignObject>
           )}
