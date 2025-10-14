@@ -1,3 +1,4 @@
+
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -58,7 +59,7 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout>();
 
-  const roadPath = "M 0 10 L 100% 10";
+  const roadPath = "M0,10 L100,10";
   const totalDuration = 1; // seconds
 
   useEffect(() => {
@@ -87,9 +88,10 @@ const BenefitsAnimation = () => {
   useEffect(() => {
     if (isInView) {
       // Start the animation timer
+      const benefitInterval = (totalDuration / benefits.length) * 1000;
       intervalRef.current = setInterval(() => {
-        setActiveBenefit(prev => (prev >= 4 ? 0 : prev + 1));
-      }, (totalDuration / 4) * 1000);
+        setActiveBenefit(prev => (prev >= benefits.length ? 0 : prev + 1));
+      }, benefitInterval);
     } else {
         setActiveBenefit(0);
         if (intervalRef.current) {
@@ -108,11 +110,13 @@ const BenefitsAnimation = () => {
     <div ref={containerRef} className="w-full space-y-16">
       <div className="relative w-full h-[20px]">
         <svg
+          width="100%"
+          height="20"
           viewBox="0 0 100 20"
           preserveAspectRatio="none"
-          className="absolute top-0 left-0 w-full h-full"
+          className="absolute top-0 left-0"
         >
-          <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
+          <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
         </svg>
 
         {isInView && (
