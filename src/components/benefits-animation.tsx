@@ -117,7 +117,7 @@ const BenefitsAnimation = () => {
           {/* Car Animation */}
           {isInView && (
              <foreignObject width="50" height="20">
-                <animateMotion
+                <animatemotion
                   dur={`${totalDuration}s`}
                   begin="0s"
                   fill="freeze"
@@ -125,7 +125,7 @@ const BenefitsAnimation = () => {
                   rotate="auto"
                 >
                   <mpath href="#road" />
-                </animateMotion>
+                </animatemotion>
                 <animate
                   attributeName="opacity"
                   from="0" to="1"
@@ -136,12 +136,12 @@ const BenefitsAnimation = () => {
                 {/* Trigger benefit changes */}
                 <animate
                     begin="0s" attributeName="visibility" from="hidden" to="visible" dur={`${totalDuration}s`} fill="freeze"
-                    onBegin={() => setActiveBenefit(0)}
+                    onbegin={() => setActiveBenefit(0)}
                 />
-                <animateMotion dur={`${totalDuration*0.25}s`} begin="0s" fill="freeze" onEnd={() => setActiveBenefit(1)}><mpath href="#road" /></animateMotion>
-                <animateMotion dur={`${totalDuration*0.5}s`} begin="0s" fill="freeze" onEnd={() => setActiveBenefit(2)}><mpath href="#road" /></animateMotion>
-                <animateMotion dur={`${totalDuration*0.75}s`} begin="0s" fill="freeze" onEnd={() => setActiveBenefit(3)}><mpath href="#road" /></animateMotion>
-                <animateMotion dur={`${totalDuration}s`} begin="0s" fill="freeze" onEnd={() => setActiveBenefit(4)}><mpath href="#road" /></animateMotion>
+                <animatemotion dur={`${totalDuration*0.25}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(1)}><mpath href="#road" /></animatemotion>
+                <animatemotion dur={`${totalDuration*0.5}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(2)}><mpath href="#road" /></animatemotion>
+                <animatemotion dur={`${totalDuration*0.75}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(3)}><mpath href="#road" /></animatemotion>
+                <animatemotion dur={`${totalDuration}s`} begin="0s" fill="freeze" onend={() => setActiveBenefit(4)}><mpath href="#road" /></animatemotion>
 
                 <Car />
             </foreignObject>
