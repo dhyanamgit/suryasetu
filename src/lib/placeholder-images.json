@@ -7,40 +7,46 @@
       "imageHint": "solar panels"
     },
     {
-      "id": "feature-buy",
-      "description": "A person using a phone to manage their energy subscription.",
-      "imageUrl": "https://picsum.photos/seed/2/600/400",
-      "imageHint": "phone energy"
-    },
-    {
-      "id": "feature-sell",
-      "description": "Rooftop with solar panels under a clear sky.",
-      "imageUrl": "https://picsum.photos/seed/3/600/400",
-      "imageHint": "rooftop solar"
-    },
-    {
       "id": "user-avatar",
       "description": "A placeholder for user avatars.",
       "imageUrl": "https://picsum.photos/seed/4/40/40",
       "imageHint": "person portrait"
     },
     {
-      "id": "solar-farm",
-      "description": "A large solar farm with rows of panels.",
-      "imageUrl": "https://picsum.photos/seed/5/600/400",
-      "imageHint": "solar farm"
+      "id": "how-it-works-1",
+      "description": "A person signing up on a laptop, with solar energy icons.",
+      "imageUrl": "https://picsum.photos/seed/101/600/400",
+      "imageHint": "laptop signup"
     },
     {
-      "id": "power-lines",
-      "description": "Power lines against a sunset.",
-      "imageUrl": "https://picsum.photos/seed/6/600/400",
-      "imageHint": "power lines"
+      "id": "how-it-works-2",
+      "description": "A dashboard showing energy production and pricing.",
+      "imageUrl": "https://picsum.photos/seed/102/600/400",
+      "imageHint": "energy dashboard"
     },
     {
-      "id": "smart-grid",
-      "description": "An abstract visualization of a smart grid.",
-      "imageUrl": "https://picsum.photos/seed/7/600/400",
-      "imageHint": "smart grid"
+      "id": "how-it-works-3",
+      "description": "A map interface on a tablet showing nearby energy sources.",
+      "imageUrl": "https://picsum.photos/seed/103/600/400",
+      "imageHint": "map interface"
+    },
+    {
+      "id": "how-it-works-4",
+      "description": "A smiling family in their home, with a subtle overlay of a digital bill showing savings.",
+      "imageUrl": "https://picsum.photos/seed/104/600/400",
+      "imageHint": "family savings"
+    },
+    {
+      "id": "how-it-works-5",
+      "description": "Abstract visualization of a secure, decentralized network with connected nodes.",
+      "imageUrl": "https://picsum.photos/seed/105/600/400",
+      "imageHint": "decentralized network"
+    },
+    {
+      "id": "how-it-works-6",
+      "description": "A vibrant community with solar panels on every roof, connected by glowing lines.",
+      "imageUrl": "https://picsum.photos/seed/106/600/400",
+      "imageHint": "community solar"
     }
   ]
 }

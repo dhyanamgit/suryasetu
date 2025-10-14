@@ -19,12 +19,12 @@ export default function Home() {
     setYear(new Date().getFullYear());
   }, []);
 
-
-  const featureSell = PlaceHolderImages.find(p => p.id === 'feature-sell');
-  const featureBuy = PlaceHolderImages.find(p => p.id === 'feature-buy');
-  const smartGrid = PlaceHolderImages.find(p => p.id === 'smart-grid');
-  const solarFarm = PlaceHolderImages.find(p => p.id === 'solar-farm');
-
+  const step1 = PlaceHolderImages.find(p => p.id === 'how-it-works-1');
+  const step2 = PlaceHolderImages.find(p => p.id === 'how-it-works-2');
+  const step3 = PlaceHolderImages.find(p => p.id === 'how-it-works-3');
+  const step4 = PlaceHolderImages.find(p => p.id === 'how-it-works-4');
+  const step5 = PlaceHolderImages.find(p => p.id === 'how-it-works-5');
+  const step6 = PlaceHolderImages.find(p => p.id === 'how-it-works-6');
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -81,27 +81,27 @@ export default function Home() {
         </div>
 
         <div className="py-24 sm:py-32 space-y-24 sm:space-y-32 overflow-x-hidden">
-          {/* How it works 1: Sellers list excess energy */}
+          {/* How it works 1: Sign up */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left" rotate>
                 <div>
-                    <h2 className="text-base font-semibold leading-7 text-accent">Step 1: List Your Energy</h2>
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 1: Sign Up & Connect</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                    Sellers Monetize Their Surplus
+                    Join the Network
                     </p>
                     <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                    Homeowners and businesses with solar panels can list their excess energy on our marketplace. Our AI tools help you optimize your pricing based on real-time data to maximize your earnings.
+                    Create your account as an energy buyer or seller. Sellers can easily connect their existing solar panel systems to the platform with our guided setup process.
                     </p>
                 </div>
                 </FadeIn>
                 <FadeIn direction="right" delay={200} rotate>
                   <div className="aspect-[3/2] w-full max-w-lg mx-auto">
-                      {featureSell && (
+                      {step1 && (
                       <Image 
-                          src={featureSell.imageUrl}
-                          alt={featureSell.description}
-                          data-ai-hint={featureSell.imageHint}
+                          src={step1.imageUrl}
+                          alt={step1.description}
+                          data-ai-hint={step1.imageHint}
                           width={600}
                           height={400}
                           className="rounded-xl shadow-2xl"
@@ -112,16 +112,16 @@ export default function Home() {
              </div>
           </section>
 
-          {/* How it works 2: Buyers subscribe to local sources */}
+          {/* How it works 2: List Energy */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                 <FadeIn direction="left" delay={200} rotate>
                   <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-last">
-                      {featureBuy && (
+                      {step2 && (
                       <Image 
-                          src={featureBuy.imageUrl}
-                          alt={featureBuy.description}
-                          data-ai-hint={featureBuy.imageHint}
+                          src={step2.imageUrl}
+                          alt={step2.description}
+                          data-ai-hint={step2.imageHint}
                           width={600}
                           height={400}
                           className="rounded-xl shadow-2xl"
@@ -131,39 +131,39 @@ export default function Home() {
                 </FadeIn>
                 <FadeIn direction="right" rotate>
                   <div className="lg:order-first">
-                      <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
+                      <h2 className="text-base font-semibold leading-7 text-accent">Step 2: List Excess Energy</h2>
                       <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                      Buyers Access Clean Power
+                      Monetize Your Surplus
                       </p>
                       <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                      Browse local, renewable energy sources and subscribe to a plan that fits your needs and budget. Enjoy cheaper, cleaner electricity without installing your own panels.
+                      Sellers can list their excess energy on our marketplace. Our AI tools help you optimize your pricing based on real-time data to maximize your earnings.
                       </p>
                   </div>
                 </FadeIn>
              </div>
           </section>
 
-           {/* How it works 3: Energy flows through the grid */}
+           {/* How it works 3: Discover */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left" rotate>
                 <div>
-                    <h2 className="text-base font-semibold leading-7 text-accent">Step 3: Secure Transactions</h2>
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 3: Discover Local Sources</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                    Transparent & Automated Trading
+                    Find Clean Energy Nearby
                     </p>
                     <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                    Energy is delivered through the existing grid. Our platform securely handles all transactions, ensuring sellers are paid and buyers receive their energy. Every transaction is transparently recorded.
+                    Buyers can browse a map of local, renewable energy producers. Filter by price, distance, and energy source to find the perfect match for your needs.
                     </p>
                 </div>
                </FadeIn>
                <FadeIn direction="right" delay={200} rotate>
                 <div className="aspect-[3/2] w-full max-w-lg mx-auto">
-                    {smartGrid && (
+                    {step3 && (
                     <Image 
-                        src={smartGrid.imageUrl}
-                        alt={smartGrid.description}
-                        data-ai-hint={smartGrid.imageHint}
+                        src={step3.imageUrl}
+                        alt={step3.description}
+                        data-ai-hint={step3.imageHint}
                         width={600}
                         height={400}
                         className="rounded-xl shadow-2xl"
@@ -174,16 +174,16 @@ export default function Home() {
             </div>
           </section>
 
-           {/* How it works 4: Build a resilient community */}
+           {/* How it works 4: Subscribe */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
                <FadeIn direction="left" delay={200} rotate>
                 <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-last">
-                    {solarFarm && (
+                    {step4 && (
                     <Image 
-                        src={solarFarm.imageUrl}
-                        alt={solarFarm.description}
-                        data-ai-hint={solarFarm.imageHint}
+                        src={step4.imageUrl}
+                        alt={step4.description}
+                        data-ai-hint={step4.imageHint}
                         width={600}
                         height={400}
                         className="rounded-xl shadow-2xl"
@@ -193,9 +193,71 @@ export default function Home() {
                </FadeIn>
                <FadeIn direction="right" rotate>
                 <div className="lg:order-first">
-                    <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Subscribe & Save</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                    Join a Decentralized Network
+                    Access Cheaper Power
+                    </p>
+                    <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                    Choose a producer and subscribe to a plan that fits your budget. Enjoy cheaper, cleaner electricity without needing to install your own panels.
+                    </p>
+                </div>
+               </FadeIn>
+            </div>
+          </section>
+
+          {/* How it works 5: Automated Trading */}
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
+               <FadeIn direction="left" rotate>
+                <div>
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 5: Automated Trading</h2>
+                    <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                    Secure & Transparent
+                    </p>
+                    <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                    Energy is delivered via the existing grid. Our platform uses smart contracts to securely automate transactions, ensuring sellers are paid and buyers get their energy.
+                    </p>
+                </div>
+               </FadeIn>
+               <FadeIn direction="right" delay={200} rotate>
+                <div className="aspect-[3/2] w-full max-w-lg mx-auto">
+                    {step5 && (
+                    <Image 
+                        src={step5.imageUrl}
+                        alt={step5.description}
+                        data-ai-hint={step5.imageHint}
+                        width={600}
+                        height={400}
+                        className="rounded-xl shadow-2xl"
+                    />
+                    )}
+                </div>
+               </FadeIn>
+            </div>
+          </section>
+
+          {/* How it works 6: Build a Resilient Grid */}
+          <section className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
+               <FadeIn direction="left" delay={200} rotate>
+                <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-last">
+                    {step6 && (
+                    <Image 
+                        src={step6.imageUrl}
+                        alt={step6.description}
+                        data-ai-hint={step6.imageHint}
+                        width={600}
+                        height={400}
+                        className="rounded-xl shadow-2xl"
+                    />
+                    )}
+                </div>
+               </FadeIn>
+               <FadeIn direction="right" rotate>
+                <div className="lg:order-first">
+                    <h2 className="text-base font-semibold leading-7 text-accent">Step 6: Build a Resilient Grid</h2>
+                    <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                    Power Your Community
                     </p>
                     <p className="mt-6 text-lg leading-8 text-muted-foreground">
                     By participating, you're not just a user—you're a stakeholder in a community-owned energy network, building a more sustainable and resilient future together.
@@ -204,6 +266,7 @@ export default function Home() {
                </FadeIn>
             </div>
           </section>
+
         </div>
 
         <div className="py-24 sm:py-32">
@@ -242,5 +305,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
