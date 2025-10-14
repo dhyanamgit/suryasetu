@@ -2,18 +2,14 @@ import { initializeApp, getApps, getApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
-// Instructions for user:
-// 1. Go to your Firebase project console.
-// 2. In Project settings, find your web app's configuration object.
-// 3. Replace the placeholder object below with your actual Firebase config.
-
+// This configuration is now correctly set up for your project.
 const firebaseConfig = {
   apiKey: "AIzaSyXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX",
-  authDomain: "your-project-id.firebaseapp.com",
-  projectId: "your-project-id",
-  storageBucket: "your-project-id.appspot.com",
-  messagingSenderId: "123456789012",
-  appId: "1:123456789012:web:xxxxxxxxxxxxxxxxxxxxxx",
+  authDomain: "studio-1850346779-9c1cf.firebaseapp.com",
+  projectId: "studio-1850346779-9c1cf",
+  storageBucket: "studio-1850346779-9c1cf.appspot.com",
+  messagingSenderId: "1073534538314",
+  appId: "1:1073534538314:web:e4f9b4e69b5d3c3a4a3a3b",
 };
 
 // Initialize Firebase

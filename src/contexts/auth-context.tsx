@@ -48,16 +48,19 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           };
           setUser(appUser);
         } else {
-          // This case happens for new Google sign-ins, or if user is created in Firebase console
-          // but not in our 'users' collection. We default them to 'buyer'.
+          // This case happens for new Google sign-ins.
+          // We default them to 'buyer' and create their user document.
            const newUser: AppUser = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
             displayName: firebaseUser.displayName,
             role: 'buyer'
            };
-           // We are creating a user doc here for Google Sign-in users who are new.
-           await setDoc(userDocRef, { displayName: firebaseUser.displayName, email: firebaseUser.email, role: 'buyer' });
+           await setDoc(userDocRef, { 
+             displayName: firebaseUser.displayName, 
+             email: firebaseUser.email, 
+             role: 'buyer' 
+           });
            setUser(newUser);
         }
       } else {
@@ -97,6 +100,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signInWithGoogle = async () => {
     setLoading(true);
     const provider = new GoogleAuthProvider();
+    // The onAuthStateChanged listener will handle the user creation in firestore
     return signInWithPopup(auth, provider).finally(() => setLoading(false));
   };
 
