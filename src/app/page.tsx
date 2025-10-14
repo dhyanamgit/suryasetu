@@ -4,7 +4,6 @@
 import { Button } from '@/components/ui/button';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
-import Logo from '@/components/logo';
 import AnimatedHeroBackground from '@/components/animated-hero-background';
 import Image from 'next/image';
 import { PlaceHolderImages } from '@/lib/placeholder-images';
@@ -28,19 +27,6 @@ export default function Home() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <header className="absolute inset-x-0 top-0 z-50">
-        <nav className="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
-          <div className="flex lg:flex-1">
-            <Logo />
-          </div>
-          <div className="flex lg:flex-1 lg:justify-end gap-x-4">
-            <Button asChild>
-              <Link href="/signup">Get Started</Link>
-            </Button>
-          </div>
-        </nav>
-      </header>
-      
       <main className="flex-grow">
         <div className="relative isolate pt-14 h-[70vh] flex items-center justify-center">
            <AnimatedHeroBackground />
@@ -305,5 +291,3 @@ export default function Home() {
     </div>
   );
 }
-
-    
