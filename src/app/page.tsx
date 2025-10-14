@@ -51,18 +51,32 @@ export default function Home() {
             </div>
           </div>
         </div>
+        
+        <div className="bg-background py-24 sm:py-32">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="mx-auto max-w-2xl lg:text-center">
+              <h2 className="text-base font-semibold leading-7 text-accent">How It Works</h2>
+              <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
+                A simple, transparent process
+              </p>
+              <p className="mt-6 text-lg leading-8 text-muted-foreground">
+                Our platform connects solar energy producers and consumers through a secure and decentralized marketplace.
+              </p>
+            </div>
+          </div>
+        </div>
 
         <div className="py-24 sm:py-32 space-y-24 sm:space-y-32">
-          {/* Feature 1: For Sellers */}
+          {/* How it works 1: Sellers list excess energy */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
               <div>
-                <h2 className="text-base font-semibold leading-7 text-accent">For Sellers</h2>
+                <h2 className="text-base font-semibold leading-7 text-accent">Step 1: List Your Energy</h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                  Monetize Your Excess Energy
+                  Sellers Monetize Their Surplus
                 </p>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                  Don't let your excess solar power go to waste. List your surplus capacity on our marketplace, set your own price, and start earning. Our AI-powered tools provide insights to help you optimize your listings and maximize your returns based on real-time market and weather data.
+                  Homeowners and businesses with solar panels can list their excess energy on our marketplace. Our AI tools help you optimize your pricing based on real-time data to maximize your earnings.
                 </p>
               </div>
               <div className="aspect-[3/2] w-full max-w-lg mx-auto">
@@ -80,16 +94,16 @@ export default function Home() {
             </div>
           </section>
 
-          {/* Feature 2: For Buyers */}
+          {/* How it works 2: Buyers subscribe to local sources */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
               <div className="lg:order-last">
-                <h2 className="text-base font-semibold leading-7 text-accent">For Buyers</h2>
+                <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                  Access Clean, Affordable Power
+                  Buyers Access Clean Power
                 </p>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                  Switch to renewable energy without the need for your own solar panels. Browse local producers, subscribe to a plan that fits your needs, and enjoy access to cheaper, cleaner electricity. No installation, no maintenance—just a simple step towards a greener future.
+                  Browse local, renewable energy sources and subscribe to a plan that fits your needs and budget. Enjoy cheaper, cleaner electricity without installing your own panels.
                 </p>
               </div>
               <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
@@ -107,16 +121,16 @@ export default function Home() {
             </div>
           </section>
 
-           {/* Feature 3: Secure & Transparent */}
+           {/* How it works 3: Energy flows through the grid */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
               <div>
-                <h2 className="text-base font-semibold leading-7 text-accent">Secure & Transparent</h2>
+                <h2 className="text-base font-semibold leading-7 text-accent">Step 3: Secure Transactions</h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                  A-Grade Security and Transparency
+                  Transparent & Automated Trading
                 </p>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                 Every transaction is recorded on a secure ledger, ensuring transparency and trust for all participants in the network. We're committed to building a more equitable and resilient energy system, together.
+                 Energy is delivered through the existing grid. Our platform securely handles all transactions, ensuring sellers are paid and buyers receive their energy. Every transaction is transparently recorded.
                 </p>
               </div>
               <div className="aspect-[3/2] w-full max-w-lg mx-auto">
@@ -134,16 +148,16 @@ export default function Home() {
             </div>
           </section>
 
-           {/* Feature 4: Community-owned */}
+           {/* How it works 4: Build a resilient community */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
               <div className="lg:order-last">
-                <h2 className="text-base font-semibold leading-7 text-accent">Community-owned</h2>
+                <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
                 <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
-                  Powering the Future, Together
+                  Join a Decentralized Network
                 </p>
                 <p className="mt-6 text-lg leading-8 text-muted-foreground">
-                  Join a network that's owned and operated by its users. We believe in a decentralized future where communities control their own energy. By participating in SundayGrids, you're not just a customer—you're a stakeholder in a more equitable and sustainable energy system.
+                  By participating, you're not just a user—you're a stakeholder in a community-owned energy network, building a more sustainable and resilient future together.
                 </p>
               </div>
               <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
