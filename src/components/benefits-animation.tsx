@@ -81,34 +81,31 @@ const BenefitsAnimation = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      // Clear any running timeouts when the component unmounts
       animationTimeoutRef.current.forEach(clearTimeout);
     };
   }, []);
 
   useEffect(() => {
-    // Clear previous timeouts if isInView changes
     animationTimeoutRef.current.forEach(clearTimeout);
     animationTimeoutRef.current = [];
 
     if (isInView) {
-      // Set initial state
       setActiveBenefit(0);
-
-      // Schedule state updates based on animation progress
       const quarterTime = (totalDuration * 1000) / 4;
-      for (let i = 1; i <= 4; i++) {
-        const timeout = setTimeout(() => {
-          setActiveBenefit(i);
-        }, quarterTime * i);
-        animationTimeoutRef.current.push(timeout);
-      }
+      
+      const benefitTimeouts = [
+          setTimeout(() => setActiveBenefit(1), quarterTime * 1),
+          setTimeout(() => setActiveBenefit(2), quarterTime * 2),
+          setTimeout(() => setActiveBenefit(3), quarterTime * 3),
+          setTimeout(() => setActiveBenefit(4), quarterTime * 4),
+      ];
+
+      animationTimeoutRef.current = [...benefitTimeouts];
+      
     } else {
-        // Reset when not in view
         setActiveBenefit(0);
     }
 
-    // Cleanup function to clear timeouts if the component unmounts or isInView changes again
     return () => {
       animationTimeoutRef.current.forEach(clearTimeout);
     };
@@ -125,9 +122,7 @@ const BenefitsAnimation = () => {
           className="absolute top-0 left-0"
         >
           <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
-          <path id="road" d={roadPath} fill="none" stroke="transparent" />
-
-          {/* Checkpoints */}
+          
           <g>
             <foreignObject x="25%" y="40%" width="20" height="20" transform="translate(-10, -50)">
                <Checkpoint active={activeBenefit >= 1} />
@@ -143,23 +138,19 @@ const BenefitsAnimation = () => {
             </foreignObject>
           </g>
 
-          {/* Car Animation */}
-          {isInView && (
-             <foreignObject width="50" height="20">
-                <animateMotion
-                  dur={`${totalDuration}s`}
-                  begin="0s"
-                  fill="freeze"
-                  repeatCount="1"
-                  rotate="auto"
-                >
-                  <mpath href="#road" />
-                </animateMotion>
-                <Car />
-            </foreignObject>
-          )}
-
         </svg>
+
+        {isInView && (
+            <div
+                className="absolute top-0 left-0 animate-drive"
+                style={{
+                  offsetPath: `path("${roadPath}")`,
+                  animationDuration: `${totalDuration}s`,
+                }}
+            >
+                <Car />
+            </div>
+        )}
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
