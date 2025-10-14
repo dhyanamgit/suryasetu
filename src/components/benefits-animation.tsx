@@ -1,4 +1,3 @@
-
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -68,7 +67,7 @@ const BenefitsAnimation = () => {
   const roadRef = useRef<SVGPathElement>(null);
 
   const roadPath = "M 0 50 L 100 50";
-  const totalDuration = 10; // seconds
+  const totalDuration = 8; // seconds
 
   useEffect(() => {
     const observer = new IntersectionObserver(
