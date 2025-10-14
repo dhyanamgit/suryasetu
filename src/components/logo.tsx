@@ -7,7 +7,7 @@ const Logo = ({ className }: { className?: string }) => {
       <div className="bg-primary p-2 rounded-md">
         <Sun className="h-5 w-5 text-primary-foreground" />
       </div>
-      <span className="font-bold text-xl font-headline">SuryaSetu</span>
+      <span className="font-bold text-xl font-headline">SundayGrids</span>
     </div>
   );
 };
