@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { ArrowRight, Zap, DollarSign, Leaf } from 'lucide-react';
 import Link from 'next/link';
 import Logo from '@/components/logo';
+import AnimatedHeroBackground from '@/components/animated-hero-background';
 
 export default function Home() {
 
@@ -22,21 +23,9 @@ export default function Home() {
       
       <main className="flex-grow">
         <div className="relative isolate pt-14 h-[70vh] flex items-center justify-center">
-          <div className="absolute inset-0 w-full h-full overflow-hidden -z-10">
-            <video
-              className="absolute top-1/2 left-1/2 min-w-full min-h-full w-auto h-auto object-cover transform -translate-x-1/2 -translate-y-1/2"
-              autoPlay
-              loop
-              muted
-              playsInline
-            >
-              <source src="https://storage.googleapis.com/fsm-prod-media/sundaysgrid/solar_panel_video.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            <div className="absolute inset-0 bg-black/60"></div>
-          </div>
+           <AnimatedHeroBackground />
           
-          <div className="py-24 sm:py-32">
+          <div className="py-24 sm:py-32 z-10">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
               <div className="mx-auto max-w-4xl text-center">
                 <h1 className="text-4xl font-bold tracking-tight text-white sm:text-7xl font-headline">
