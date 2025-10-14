@@ -1,3 +1,46 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "hero-background",
+      "description": "Abstract solar panel patterns with a blue and gold hue",
+      "imageUrl": "https://picsum.photos/seed/1/1920/1080",
+      "imageHint": "solar panels"
+    },
+    {
+      "id": "feature-buy",
+      "description": "A person using a phone to manage their energy subscription.",
+      "imageUrl": "https://picsum.photos/seed/2/600/400",
+      "imageHint": "phone energy"
+    },
+    {
+      "id": "feature-sell",
+      "description": "Rooftop with solar panels under a clear sky.",
+      "imageUrl": "https://picsum.photos/seed/3/600/400",
+      "imageHint": "rooftop solar"
+    },
+    {
+      "id": "user-avatar",
+      "description": "A placeholder for user avatars.",
+      "imageUrl": "https://picsum.photos/seed/4/40/40",
+      "imageHint": "person portrait"
+    },
+    {
+      "id": "solar-farm",
+      "description": "A large solar farm with rows of panels.",
+      "imageUrl": "https://picsum.photos/seed/5/600/400",
+      "imageHint": "solar farm"
+    },
+    {
+      "id": "power-lines",
+      "description": "Power lines against a sunset.",
+      "imageUrl": "https://picsum.photos/seed/6/600/400",
+      "imageHint": "power lines"
+    },
+    {
+      "id": "smart-grid",
+      "description": "An abstract visualization of a smart grid.",
+      "imageUrl": "https://picsum.photos/seed/7/600/400",
+      "imageHint": "smart grid"
+    }
+  ]
 }
