@@ -57,7 +57,7 @@ const BenefitsAnimation = () => {
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const roadContainerRef = useRef<HTMLDivElement>(null);
-  const [roadPath, setRoadPath] = useState("M0,10");
+  const [roadPath, setRoadPath] = useState("path('M0,10 L0,10')");
   const intervalRef = useRef<NodeJS.Timeout>();
 
   const totalDuration = 10; // seconds
@@ -83,7 +83,8 @@ const BenefitsAnimation = () => {
     }
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Initial calculation
+    // Use a timeout to ensure the layout is stable before measuring
+    setTimeout(handleResize, 100);
 
 
     return () => {
@@ -100,9 +101,11 @@ const BenefitsAnimation = () => {
   useEffect(() => {
     if (isInView) {
       // Start the animation timer
+      setActiveBenefit(1); // Light up the first benefit immediately
       const benefitInterval = (totalDuration / benefits.length) * 1000;
       intervalRef.current = setInterval(() => {
-        setActiveBenefit(prev => (prev >= benefits.length ? 0 : prev + 1));
+        // We start from 2 since 1 is already active
+        setActiveBenefit(prev => (prev >= benefits.length ? 1 : prev + 1));
       }, benefitInterval);
     } else {
         setActiveBenefit(0);
