@@ -58,7 +58,7 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout>();
 
-  const roadPath = "M 0 10 L 100 10";
+  const roadPath = "M 0 10 L 100% 10";
   const totalDuration = 1; // seconds
 
   useEffect(() => {
@@ -108,11 +108,9 @@ const BenefitsAnimation = () => {
     <div ref={containerRef} className="w-full space-y-16">
       <div className="relative w-full h-[20px]">
         <svg
-          width="100%"
-          height="100%"
           viewBox="0 0 100 20"
           preserveAspectRatio="none"
-          className="absolute top-0 left-0"
+          className="absolute top-0 left-0 w-full h-full"
         >
           <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
         </svg>
@@ -123,6 +121,7 @@ const BenefitsAnimation = () => {
             style={{
                 offsetPath: `path('${roadPath}')`,
                 animationDuration: `${totalDuration}s`,
+                transform: 'translateY(-17px)'
             }}
             >
               <Car />
