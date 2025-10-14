@@ -57,13 +57,17 @@ const Checkpoint = ({ active }: { active: boolean }) => (
   <div className={cn("w-4 h-4 rounded-full border-2 border-primary bg-background transition-all duration-500", active && "bg-primary shadow-lg shadow-primary/50")}></div>
 );
 
+const checkpoints = [0.25, 0.5, 0.75, 1.0];
+
 const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const animationFrameRef = useRef<number>();
+  const carRef = useRef<HTMLDivElement>(null);
+  const roadRef = useRef<SVGPathElement>(null);
 
-  const roadPath = "M 0 50 L 920 50";
+  const roadPath = "M 0 50 L 100 50";
   const totalDuration = 10; // seconds
 
   useEffect(() => {
@@ -83,78 +87,81 @@ const BenefitsAnimation = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      if (animationIntervalRef.current) {
-        clearInterval(animationIntervalRef.current);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, []);
 
   useEffect(() => {
-    if (animationIntervalRef.current) {
-        clearInterval(animationIntervalRef.current);
-    }
-
     if (isInView) {
-      setActiveBenefit(0);
-      const stepTime = (totalDuration * 1000) / (benefits.length);
-      
-      const interval = setInterval(() => {
-        setActiveBenefit(prev => {
-            const next = prev + 1;
-            if (next > benefits.length) {
-                return 0; 
-            }
-            return next;
-        });
-      }, stepTime);
+      const checkCarPosition = () => {
+        if (carRef.current && roadRef.current) {
+          const carRect = carRef.current.getBoundingClientRect();
+          const roadRect = roadRef.current.getBoundingClientRect();
+          
+          const progress = (carRect.left - roadRect.left) / roadRect.width;
 
-      animationIntervalRef.current = interval;
+          let currentCheckpoint = 0;
+          for(let i = 0; i < checkpoints.length; i++) {
+            if (progress >= checkpoints[i]) {
+              currentCheckpoint = i + 1;
+            }
+          }
+          if (progress >= 0.99) { // Handle end of animation
+             currentCheckpoint = 4;
+          }
+          
+          setActiveBenefit(currentCheckpoint);
+        }
+        animationFrameRef.current = requestAnimationFrame(checkCarPosition);
+      };
       
+      animationFrameRef.current = requestAnimationFrame(checkCarPosition);
+
     } else {
         setActiveBenefit(0);
+        if (animationFrameRef.current) {
+            cancelAnimationFrame(animationFrameRef.current);
+        }
     }
 
     return () => {
-      if (animationIntervalRef.current) {
-        clearInterval(animationIntervalRef.current);
+      if (animationFrameRef.current) {
+        cancelAnimationFrame(animationFrameRef.current);
       }
     };
   }, [isInView]);
 
   return (
-    <div ref={containerRef} className="w-full space-y-16 overflow-hidden">
+    <div ref={containerRef} className="w-full space-y-16">
       <div className="relative w-full h-[100px]">
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 920 100"
-          preserveAspectRatio="xMidYMid meet"
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
           className="absolute top-0 left-0"
         >
-          <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
+          <path ref={roadRef} id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
           
           <g>
-            <foreignObject x="25%" y="20" width="20" height="20" transform="translate(-10, -10)">
-               <Checkpoint active={activeBenefit >= 1} />
-            </foreignObject>
-             <foreignObject x="50%" y="20" width="20" height="20" transform="translate(-10, -10)">
-               <Checkpoint active={activeBenefit >= 2} />
-            </foreignObject>
-             <foreignObject x="75%" y="20" width="20" height="20" transform="translate(-10, -10)">
-               <Checkpoint active={activeBenefit >= 3} />
-            </foreignObject>
-             <foreignObject x="100%" y="20" width="20" height="20" transform="translate(-20, -10)">
-               <Checkpoint active={activeBenefit >= 4} />
-            </foreignObject>
+            {checkpoints.map((cp, index) => (
+               <foreignObject key={index} x={cp * 100} y="30" width="20" height="20" transform="translate(-2, -10)">
+                  <Checkpoint active={activeBenefit >= index + 1} />
+               </foreignObject>
+            ))}
           </g>
         </svg>
 
         {isInView && (
           <div
+            ref={carRef}
             className="absolute top-0 left-0 w-[50px] h-[20px] animate-drive"
             style={{
                 offsetPath: `path('${roadPath}')`,
                 animationDuration: `${totalDuration}s`,
+                transform: 'translateY(-4px)'
             }}
             >
               <Car />
