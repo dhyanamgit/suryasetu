@@ -58,8 +58,8 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const intervalRef = useRef<NodeJS.Timeout>();
 
-  const roadPath = "M 0 50 L 100 50";
-  const totalDuration = 4; // seconds
+  const roadPath = "M 0 10 L 100 10";
+  const totalDuration = 1; // seconds
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -106,11 +106,11 @@ const BenefitsAnimation = () => {
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
-      <div className="relative w-full h-[100px]">
+      <div className="relative w-full h-[20px]">
         <svg
           width="100%"
           height="100%"
-          viewBox="0 0 100 100"
+          viewBox="0 0 100 20"
           preserveAspectRatio="none"
           className="absolute top-0 left-0"
         >
@@ -123,7 +123,6 @@ const BenefitsAnimation = () => {
             style={{
                 offsetPath: `path('${roadPath}')`,
                 animationDuration: `${totalDuration}s`,
-                transform: 'translateY(-4px)'
             }}
             >
               <Car />
