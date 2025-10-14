@@ -63,7 +63,7 @@ export default function Home() {
            <div className="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-t from-background to-transparent"></div>
         </div>
 
-        <section id="features" className="py-24 sm:py-32 -mt-48">
+        <section id="features" className="py-24 sm:py-32 -mt-32">
           <div className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="mx-auto max-w-2xl lg:text-center">
               <h2 className="text-base font-semibold leading-7 text-accent">How It Works</h2>
