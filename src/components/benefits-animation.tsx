@@ -58,6 +58,8 @@ const BenefitsAnimation = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   const roadContainerRef = useRef<HTMLDivElement>(null);
   const [roadPath, setRoadPath] = useState("path('M0,10 L0,10')");
+  const [roadLine, setRoadLine] = useState("M0,10 L0,10");
+  const [animationFinished, setAnimationFinished] = useState(false);
   const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
   const totalDuration = 10; // seconds
@@ -79,6 +81,7 @@ const BenefitsAnimation = () => {
         if (roadContainerRef.current) {
             const width = roadContainerRef.current.offsetWidth;
             setRoadPath(`path('M0,10 L${width},10')`);
+            setRoadLine(`M0,10 L${width},10`);
         }
     }
 
@@ -100,8 +103,8 @@ const BenefitsAnimation = () => {
     timeoutRefs.current.forEach(clearTimeout);
     
     if (isInView) {
-      // Start the animation timer
-      setActiveBenefit(1); // Light up the first benefit immediately
+      setActiveBenefit(1);
+      setAnimationFinished(false);
       const benefitInterval = (totalDuration / benefits.length) * 1000;
       
       benefits.forEach((_, index) => {
@@ -112,9 +115,16 @@ const BenefitsAnimation = () => {
             timeoutRefs.current.push(timeout);
         }
       });
+      
+      const finishTimeout = setTimeout(() => {
+        setAnimationFinished(true);
+      }, totalDuration * 1000);
+      timeoutRefs.current.push(finishTimeout);
+
 
     } else {
         setActiveBenefit(0);
+        setAnimationFinished(true);
     }
 
     return () => {
@@ -130,12 +140,15 @@ const BenefitsAnimation = () => {
           height="20"
           className="absolute top-0 left-0"
         >
-          <path d="M0,10 L100%,10" fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
+          <path d={roadLine} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
         </svg>
 
         {isInView && (
           <div
-            className="absolute top-0 left-0 w-[50px] h-[20px] animate-drive"
+            className={cn(
+              "absolute top-0 left-0 w-[50px] h-[20px] animate-drive transition-opacity duration-500",
+              animationFinished ? "opacity-0" : "opacity-100"
+            )}
             style={{
                 offsetPath: roadPath,
                 animationDuration: `${totalDuration}s`,
