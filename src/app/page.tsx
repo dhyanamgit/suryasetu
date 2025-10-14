@@ -42,7 +42,7 @@ export default function Home() {
                   The future of the grid is decentralized
                 </h1>
                 <p className="mt-6 text-lg leading-8 text-neutral-300">
-                  SundayGrids is a platform for peer-to-peer energy trading. We connect homeowners who have excess solar power with those who want to buy it.
+                  SuryaSetu is a platform for peer-to-peer energy trading. We connect homeowners who have excess solar power with those who want to buy it.
                 </p>
                 <div className="mt-10 flex items-center justify-center gap-x-6">
                   <Button asChild size="lg">

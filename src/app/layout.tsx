@@ -5,7 +5,7 @@ import { Toaster } from '@/components/ui/toaster';
 import { ThemeProvider } from '@/components/theme-provider';
 
 export const metadata: Metadata = {
-  title: 'SundayGrids - P2P Energy Trading',
+  title: 'SuryaSetu - P2P Energy Trading',
   description: 'Connecting solar energy producers with consumers.',
 };
 

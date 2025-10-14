@@ -25,7 +25,7 @@ const Logo = ({ className }: { className?: string }) => {
         <span className="sr-only">Toggle theme</span>
         <Icon className="h-5 w-5 text-primary-foreground" />
       </button>
-      <span className="font-bold text-xl font-headline">SundayGrids</span>
+      <span className="font-bold text-xl font-headline">SuryaSetu</span>
     </div>
   );
 };
