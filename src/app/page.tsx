@@ -73,8 +73,8 @@ export default function Home() {
           {/* How it works 1: Sellers list excess energy */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-               <FadeIn direction="left" rotate>
-                <div>
+               <FadeIn direction="right" rotate>
+                <div className="lg:order-last">
                     <h2 className="text-base font-semibold leading-7 text-accent">Step 1: List Your Energy</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                     Sellers Monetize Their Surplus
@@ -84,8 +84,8 @@ export default function Home() {
                     </p>
                 </div>
                 </FadeIn>
-                <FadeIn direction="right" delay={200} rotate>
-                  <div className="aspect-[3/2] w-full max-w-lg mx-auto">
+                <FadeIn direction="left" delay={200} rotate>
+                  <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                       {featureSell && (
                       <Image 
                           src={featureSell.imageUrl}
@@ -104,8 +104,8 @@ export default function Home() {
           {/* How it works 2: Buyers subscribe to local sources */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
              <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-                <FadeIn direction="right" rotate>
-                  <div className="lg:order-last">
+                <FadeIn direction="left" rotate>
+                  <div>
                       <h2 className="text-base font-semibold leading-7 text-accent">Step 2: Find & Subscribe</h2>
                       <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                       Buyers Access Clean Power
@@ -115,8 +115,8 @@ export default function Home() {
                       </p>
                   </div>
                 </FadeIn>
-                <FadeIn direction="left" delay={200} rotate>
-                  <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
+                <FadeIn direction="right" delay={200} rotate>
+                  <div className="aspect-[3/2] w-full max-w-lg mx-auto">
                       {featureBuy && (
                       <Image 
                           src={featureBuy.imageUrl}
@@ -135,8 +135,8 @@ export default function Home() {
            {/* How it works 3: Energy flows through the grid */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-               <FadeIn direction="left" rotate>
-                <div>
+               <FadeIn direction="right" rotate>
+                <div className="lg:order-last">
                     <h2 className="text-base font-semibold leading-7 text-accent">Step 3: Secure Transactions</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                     Transparent & Automated Trading
@@ -146,8 +146,8 @@ export default function Home() {
                     </p>
                 </div>
                </FadeIn>
-               <FadeIn direction="right" delay={200} rotate>
-                <div className="aspect-[3/2] w-full max-w-lg mx-auto">
+               <FadeIn direction="left" delay={200} rotate>
+                <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
                     {smartGrid && (
                     <Image 
                         src={smartGrid.imageUrl}
@@ -166,8 +166,8 @@ export default function Home() {
            {/* How it works 4: Build a resilient community */}
           <section className="mx-auto max-w-7xl px-6 lg:px-8">
             <div className="grid grid-cols-1 items-center gap-x-16 gap-y-10 lg:grid-cols-2">
-               <FadeIn direction="right" rotate>
-                <div className="lg:order-last">
+               <FadeIn direction="left" rotate>
+                <div>
                     <h2 className="text-base font-semibold leading-7 text-accent">Step 4: Power the Community</h2>
                     <p className="mt-2 text-3xl font-bold tracking-tight text-foreground sm:text-4xl font-headline">
                     Join a Decentralized Network
@@ -177,8 +177,8 @@ export default function Home() {
                     </p>
                 </div>
                </FadeIn>
-               <FadeIn direction="left" delay={200} rotate>
-                <div className="aspect-[3/2] w-full max-w-lg mx-auto lg:order-first">
+               <FadeIn direction="right" delay={200} rotate>
+                <div className="aspect-[3/2] w-full max-w-lg mx-auto">
                     {solarFarm && (
                     <Image 
                         src={solarFarm.imageUrl}
