@@ -2,29 +2,43 @@
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
 import React, { useState, useEffect, useRef } from "react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 
 const benefits = [
   {
     icon: DollarSign,
     title: "Lower Electricity Bills",
     description: "Access locally-produced solar energy at competitive rates, reducing your monthly utility expenses significantly.",
+    details: "By subscribing to local solar producers on the SuryaSetu platform, you bypass traditional utility markups. Our peer-to-peer model means energy flows more directly from source to consumer, ensuring fair prices for everyone. You can monitor your savings in real-time through your dashboard and see the tangible impact on your wallet."
   },
   {
     icon: Sun,
     title: "Earn Passive Income",
     description: "Sell your excess solar power to your community and turn your investment into a consistent source of income.",
+    details: "Your solar panels are an asset. With SuryaSetu, you can monetize every extra kilowatt-hour you generate. Our platform makes it easy to list your excess capacity, and our AI-powered pricing tools help you maximize your earnings based on demand and grid conditions. It’s a simple, automated way to get a return on your solar investment."
   },
   {
     icon: Zap,
     title: "Support Green Energy",
     description: "Contribute to a sustainable future by promoting the use of clean, renewable energy and reducing carbon emissions.",
+    details: "Every transaction on SuryaSetu represents a commitment to a greener planet. By participating, you are actively helping to reduce your community's reliance on fossil fuels, decrease air pollution, and combat climate change. Your choice empowers a distributed network of clean energy, creating a more sustainable world for future generations."
   },
   {
     icon: ShieldCheck,
     title: "Increase Grid Resilience",
     description: "Help build a decentralized energy network that is more stable and less prone to large-scale outages.",
+    details: "Centralized power grids are vulnerable to single points of failure. A decentralized, community-powered grid, like the one SuryaSetu facilitates, is inherently more resilient. By distributing power generation across many local sources, we reduce the strain on the main grid and create a more robust, reliable energy supply for the entire community."
   },
 ];
+
+type Benefit = (typeof benefits)[0];
+
 
 const Car = () => (
   <svg
@@ -62,7 +76,17 @@ const BenefitsAnimation = () => {
   const [animationFinished, setAnimationFinished] = useState(false);
   const timeoutRefs = useRef<NodeJS.Timeout[]>([]);
 
+  const [selectedBenefit, setSelectedBenefit] = useState<Benefit | null>(null);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
+
   const totalDuration = 10; // seconds
+
+  const handleBenefitClick = (benefit: Benefit) => {
+    if (animationFinished) {
+      setSelectedBenefit(benefit);
+      setIsPopupOpen(true);
+    }
+  };
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -134,7 +158,13 @@ const BenefitsAnimation = () => {
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
-      <div ref={roadContainerRef} className="relative w-full h-[20px]">
+      <div 
+        ref={roadContainerRef} 
+        className={cn(
+          "relative w-full h-[20px] transition-opacity duration-1000",
+          animationFinished ? "opacity-0" : "opacity-100"
+        )}
+      >
         <svg
           width="100%"
           height="20"
@@ -163,10 +193,24 @@ const BenefitsAnimation = () => {
         {benefits.map((benefit, index) => {
           const BenefitIcon = benefit.icon;
           const isActive = index < activeBenefit;
+          const isClickable = animationFinished;
+          
           return (
-            <div key={index} className={cn("text-center transition-all duration-700", isActive ? "opacity-100" : "opacity-30")}>
+            <div 
+              key={index} 
+              className={cn(
+                "text-center transition-all duration-700 ease-in-out", 
+                isActive ? "opacity-100" : "opacity-30",
+                isClickable && "transform hover:scale-105 cursor-pointer"
+              )}
+              onClick={() => handleBenefitClick(benefit)}
+            >
               <div className="flex justify-center mb-4">
-                  <div className={cn("w-16 h-16 rounded-full flex items-center justify-center bg-card border-2 transition-colors duration-500", isActive ? "border-primary text-primary" : "border-border text-muted-foreground")}>
+                  <div className={cn(
+                      "w-16 h-16 rounded-full flex items-center justify-center bg-card border-2 transition-all duration-500", 
+                      isActive ? "border-primary text-primary" : "border-border text-muted-foreground",
+                      isClickable && "shadow-lg hover:shadow-primary/50"
+                    )}>
                       <BenefitIcon className="w-8 h-8" />
                   </div>
               </div>
@@ -176,7 +220,24 @@ const BenefitsAnimation = () => {
           );
         })}
       </div>
-
+      
+      {selectedBenefit && (
+        <Dialog open={isPopupOpen} onOpenChange={setIsPopupOpen}>
+          <DialogContent className="sm:max-w-md bg-card border-border rounded-xl shadow-2xl">
+            <DialogHeader>
+              <div className="flex justify-center mb-4">
+                <div className="w-16 h-16 rounded-full flex items-center justify-center bg-background border-2 border-primary text-primary">
+                  <selectedBenefit.icon className="w-8 h-8" />
+                </div>
+              </div>
+              <DialogTitle className="text-center text-2xl font-headline">{selectedBenefit.title}</DialogTitle>
+            </DialogHeader>
+            <DialogDescription className="text-center text-lg text-muted-foreground mt-4 px-4">
+              {selectedBenefit.details}
+            </DialogDescription>
+          </DialogContent>
+        </Dialog>
+      )}
     </div>
   );
 };
