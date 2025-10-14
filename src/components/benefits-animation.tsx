@@ -62,9 +62,7 @@ const BenefitsAnimation = () => {
   const [activeBenefit, setActiveBenefit] = useState(0);
   const [isInView, setIsInView] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
-  const animationFrameRef = useRef<number>();
-  const carRef = useRef<HTMLDivElement>(null);
-  const roadRef = useRef<SVGPathElement>(null);
+  const intervalRef = useRef<NodeJS.Timeout>();
 
   const roadPath = "M 0 50 L 100 50";
   const totalDuration = 8; // seconds
@@ -86,51 +84,31 @@ const BenefitsAnimation = () => {
       if (currentRef) {
         observer.unobserve(currentRef);
       }
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
     };
   }, []);
 
   useEffect(() => {
     if (isInView) {
-      const checkCarPosition = () => {
-        if (carRef.current && roadRef.current) {
-          const carRect = carRef.current.getBoundingClientRect();
-          const roadRect = roadRef.current.getBoundingClientRect();
-          
-          const progress = (carRect.left - roadRect.left) / roadRect.width;
-
-          let currentCheckpoint = 0;
-          for(let i = 0; i < checkpoints.length; i++) {
-            if (progress >= checkpoints[i]) {
-              currentCheckpoint = i + 1;
-            }
-          }
-          if (progress >= 0.99) { // Handle end of animation
-             currentCheckpoint = 4;
-          }
-          
-          setActiveBenefit(currentCheckpoint);
-        }
-        animationFrameRef.current = requestAnimationFrame(checkCarPosition);
-      };
-      
-      animationFrameRef.current = requestAnimationFrame(checkCarPosition);
-
+      // Start the animation timer
+      intervalRef.current = setInterval(() => {
+        setActiveBenefit(prev => (prev >= 4 ? 0 : prev + 1));
+      }, (totalDuration / 4) * 1000);
     } else {
         setActiveBenefit(0);
-        if (animationFrameRef.current) {
-            cancelAnimationFrame(animationFrameRef.current);
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
         }
     }
 
     return () => {
-      if (animationFrameRef.current) {
-        cancelAnimationFrame(animationFrameRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
       }
     };
-  }, [isInView]);
+  }, [isInView, totalDuration]);
 
   return (
     <div ref={containerRef} className="w-full space-y-16">
@@ -142,7 +120,7 @@ const BenefitsAnimation = () => {
           preserveAspectRatio="none"
           className="absolute top-0 left-0"
         >
-          <path ref={roadRef} id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
+          <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="0.5" strokeDasharray="2.5 1.25" vectorEffect="non-scaling-stroke" />
           
           <g>
             {checkpoints.map((cp, index) => (
@@ -155,7 +133,6 @@ const BenefitsAnimation = () => {
 
         {isInView && (
           <div
-            ref={carRef}
             className="absolute top-0 left-0 w-[50px] h-[20px] animate-drive"
             style={{
                 offsetPath: `path('${roadPath}')`,
