@@ -1,3 +1,4 @@
+
 "use client";
 import { cn } from "@/lib/utils";
 import { DollarSign, Zap, Sun, ShieldCheck } from "lucide-react";
@@ -127,7 +128,7 @@ const BenefitsAnimation = () => {
           preserveAspectRatio="xMidYMid meet"
           className="absolute top-0 left-0"
         >
-          <path d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
+          <path id="road" d={roadPath} fill="none" stroke="hsl(var(--border))" strokeWidth="2" strokeDasharray="10 5" />
           
           <g>
             <foreignObject x="25%" y="20" width="20" height="20" transform="translate(-10, -10)">
@@ -144,21 +145,25 @@ const BenefitsAnimation = () => {
             </foreignObject>
           </g>
 
+           {isInView && (
+            <g>
+              <foreignObject x="0" y="0" width="50" height="20" transform="translate(0, -17)">
+                <Car />
+                <animateMotion
+                  dur={`${totalDuration}s`}
+                  repeatCount="indefinite"
+                  rotate="auto"
+                  keyPoints="0;1"
+                  keyTimes="0;1"
+                >
+                  <mpath href="#road" />
+                </animateMotion>
+              </foreignObject>
+            </g>
+           )}
+
         </svg>
 
-        {isInView && (
-            <div
-                className="absolute top-0 left-0 animate-drive"
-                style={{
-                  offsetPath: `path("${roadPath}")`,
-                  animationDuration: `${totalDuration}s`,
-                }}
-            >
-                <div style={{ transform: 'translateY(-17px)' }}>
-                  <Car />
-                </div>
-            </div>
-        )}
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 px-4">
