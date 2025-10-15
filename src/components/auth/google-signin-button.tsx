@@ -27,9 +27,9 @@ export default function GoogleSignInButton() {
       await signInWithGoogle();
       toast({
         title: "Sign In Successful",
-        description: "Redirecting to your dashboard...",
+        description: "Welcome! Redirecting...",
       });
-      router.push('/dashboard');
+      router.push('/welcome');
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : "An unknown error occurred.";
        toast({

@@ -4,7 +4,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, GithubAuthProvider } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export type UserRole = 'buyer' | 'seller' | 'superadmin';
@@ -23,7 +23,6 @@ interface AuthContextType {
   signUp: (email: string, pass: string, name: string, role: UserRole) => Promise<any>;
   signOut: () => Promise<void>;
   signInWithGoogle: () => Promise<any>;
-  signInWithGitHub: () => Promise<any>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -105,19 +104,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     return signInWithPopup(auth, provider).finally(() => setLoading(false));
   };
 
-  const signInWithGitHub = async () => {
-    setLoading(true);
-    const provider = new GithubAuthProvider();
-    return signInWithPopup(auth, provider).finally(() => setLoading(false));
-  };
-
   const signOut = async () => {
     await firebaseSignOut(auth);
     setUser(null);
     router.push('/login');
   };
 
-  const value = { user, loading, signIn, signUp, signOut, signInWithGoogle, signInWithGitHub };
+  const value = { user, loading, signIn, signUp, signOut, signInWithGoogle };
 
   return (
     <AuthContext.Provider value={value}>
