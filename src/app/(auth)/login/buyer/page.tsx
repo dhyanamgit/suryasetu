@@ -1,5 +1,7 @@
 
+
 import GoogleSignInButton from '@/components/auth/google-signin-button';
+import GitHubSignInButton from '@/components/auth/github-signin-button';
 import Logo from '@/components/logo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -14,10 +16,11 @@ export default function BuyerLoginPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="font-headline">Buyer Login</CardTitle>
-            <CardDescription>Sign in with your Google account to continue.</CardDescription>
+            <CardDescription>Sign in to continue.</CardDescription>
           </CardHeader>
-          <CardContent>
+          <CardContent className="space-y-4">
             <GoogleSignInButton />
+            <GitHubSignInButton />
           </CardContent>
         </Card>
         <p className="text-center text-sm text-muted-foreground mt-6">
