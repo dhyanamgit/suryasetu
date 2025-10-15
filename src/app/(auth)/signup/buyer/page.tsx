@@ -1,6 +1,5 @@
 
-
-import GoogleSignInButton from '@/components/auth/google-signin-button';
+import MagicLinkForm from '@/components/auth/magic-link-form';
 import Logo from '@/components/logo';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
@@ -15,10 +14,10 @@ export default function BuyerSignupPage() {
         <Card>
           <CardHeader className="text-center">
             <CardTitle className="font-headline">Create a Buyer Account</CardTitle>
-            <CardDescription>Join our community by signing up with your favorite provider.</CardDescription>
+            <CardDescription>Enter your email to get started with a magic link.</CardDescription>
           </CardHeader>
           <CardContent className="space-y-4">
-            <GoogleSignInButton />
+            <MagicLinkForm />
           </CardContent>
         </Card>
         <p className="text-center text-sm text-muted-foreground mt-6">

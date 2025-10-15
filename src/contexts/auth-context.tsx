@@ -4,7 +4,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, sendSignInLinkToEmail, isSignInWithEmailLink, signInWithEmailLink } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export type UserRole = 'buyer' | 'seller' | 'superadmin';
@@ -22,14 +22,25 @@ interface AuthContextType {
   signIn: (email: string, pass: string) => Promise<any>;
   signUp: (email: string, pass: string, name: string, role: UserRole) => Promise<any>;
   signOut: () => Promise<void>;
-  signInWithGoogle: () => Promise<any>;
+  signInWithMagicLink: (email: string) => Promise<void>;
+  isSigningIn: boolean;
+  completeSignInWithEmailLink: (email: string, url: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
+const actionCodeSettings = {
+    // URL you want to redirect back to. The domain (www.example.com) must be
+    // in the Authorized Domains list in the Firebase Console.
+    url: typeof window !== 'undefined' ? `${window.location.origin}/welcome` : 'http://localhost:9002/welcome',
+    // This must be true.
+    handleCodeInApp: true,
+};
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
+  const [isSigningIn, setIsSigningIn] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -48,8 +59,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           };
           setUser(appUser);
         } else {
-          // This case happens for new Google/GitHub sign-ins.
-          // We default them to 'buyer' and create their user document.
            const newUser: AppUser = {
             uid: firebaseUser.uid,
             email: firebaseUser.email,
@@ -57,7 +66,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             role: 'buyer'
            };
            await setDoc(userDocRef, { 
-             displayName: firebaseUser.displayName, 
+             displayName: firebaseUser.displayName || firebaseUser.email, 
              email: firebaseUser.email, 
              role: 'buyer' 
            });
@@ -83,26 +92,41 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         const userCredential = await createUserWithEmailAndPassword(auth, email, pass);
         const firebaseUser = userCredential.user;
 
-        // Create a document in Firestore for the new user
         await setDoc(doc(db, "users", firebaseUser.uid), {
             displayName: name,
             email: email,
             role: role
         });
         
-        // This will be picked up by onAuthStateChanged
         return userCredential;
     } finally {
         setLoading(false);
     }
   };
 
-  const signInWithGoogle = async () => {
+  const signInWithMagicLink = async (email: string) => {
     setLoading(true);
-    const provider = new GoogleAuthProvider();
-    // The onAuthStateChanged listener will handle the user creation in firestore
-    return signInWithPopup(auth, provider).finally(() => setLoading(false));
+    try {
+      await sendSignInLinkToEmail(auth, email, actionCodeSettings);
+      // Save the email locally so you don't need to ask the user for it again
+      // if they open the link on the same device.
+      window.localStorage.setItem('emailForSignIn', email);
+    } finally {
+      setLoading(false);
+    }
   };
+
+  const completeSignInWithEmailLink = async (email: string, url: string) => {
+      setIsSigningIn(true);
+      try {
+        const result = await signInWithEmailLink(auth, email, url);
+        window.localStorage.removeItem('emailForSignIn');
+        // The onAuthStateChanged listener will handle setting the user and redirecting.
+        return;
+      } finally {
+        setIsSigningIn(false);
+      }
+  }
 
   const signOut = async () => {
     await firebaseSignOut(auth);
@@ -110,7 +134,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     router.push('/login');
   };
 
-  const value = { user, loading, signIn, signUp, signOut, signInWithGoogle };
+  const value = { user, loading, signIn, signUp, signOut, signInWithMagicLink, isSigningIn, completeSignInWithEmailLink };
 
   return (
     <AuthContext.Provider value={value}>
