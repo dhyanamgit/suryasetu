@@ -283,11 +283,12 @@ export default function Home() {
           </div>
           <div className="mt-8 md:order-1 md:mt-0">
             <p className="text-center text-xs leading-5 text-muted-foreground">
-              &copy; {year} SuryaSetu, Inc. All rights reserved.
+              &copy; {year && year} SuryaSetu, Inc. All rights reserved.
             </p>
           </div>
         </div>
       </footer>
     </div>
   );
-}
+
+    
