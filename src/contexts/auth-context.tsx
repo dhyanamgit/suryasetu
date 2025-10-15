@@ -4,7 +4,7 @@
 import React, { createContext, useState, useEffect, ReactNode } from 'react';
 import { useRouter } from 'next/navigation';
 import { auth, db } from '@/lib/firebase';
-import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendSignInLinkToEmail, signInWithEmailLink } from 'firebase/auth';
+import { onAuthStateChanged, User, signOut as firebaseSignOut, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendSignInLinkToEmail, signInWithEmailLink, isSignInWithEmailLink } from 'firebase/auth';
 import { doc, setDoc, getDoc } from 'firebase/firestore';
 
 export type UserRole = 'buyer' | 'seller' | 'superadmin';
@@ -37,7 +37,7 @@ const actionCodeSettings = {
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<AppUser | null>(null);
   const [loading, setLoading] = useState(true);
-  const [isSigningIn, setIsSigningIn] = useState(false);
+  const [isSigningIn, setIsSigningIn] = useState(true); // Start as true
   const router = useRouter();
 
   useEffect(() => {
@@ -77,6 +77,18 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setIsSigningIn(false); // Finished processing auth state change
     });
 
+    // Check if the current URL is a sign-in link on initial load
+    if (typeof window !== 'undefined' && isSignInWithEmailLink(auth, window.location.href)) {
+        // We are on a magic link page, so we are in the process of signing in.
+        // The /welcome page will handle the actual sign-in logic.
+        // We set loading to true and isSigningIn to true to show the loader.
+        setLoading(true);
+        setIsSigningIn(true);
+    } else {
+        setIsSigningIn(false);
+    }
+
+
     return () => unsubscribe();
   }, []);
 
@@ -96,6 +108,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         role: role
     });
     
+    // Set user immediately after sign up to avoid race conditions with onAuthStateChanged
+    const appUser: AppUser = {
+        uid: firebaseUser.uid,
+        email,
+        displayName: name,
+        role
+    };
+    setUser(appUser);
     return userCredential;
   };
 
@@ -109,13 +129,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const completeSignInWithEmailLink = async (email: string, url: string) => {
       if (isSigningIn) return;
       setIsSigningIn(true);
+      setLoading(true);
       try {
         await signInWithEmailLink(auth, email, url);
         window.localStorage.removeItem('emailForSignIn');
-        // The onAuthStateChanged listener will handle setting the user and loading states.
+        // The onAuthStateChanged listener will handle setting the user and final loading states.
       } catch (error) {
           console.error("Error signing in with email link", error);
           setIsSigningIn(false);
+          setLoading(false);
           throw error;
       }
   }
