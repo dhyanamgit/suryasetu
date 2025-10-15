@@ -12,69 +12,56 @@ import { Loader2 } from 'lucide-react';
 export default function WelcomePage() {
   const router = useRouter();
   const { user, loading, completeSignInWithEmailLink, isSigningIn } = useAuth();
-  const [isProcessingLink, setIsProcessingLink] = useState(true);
-  const [showAnimation, setShowAnimation] = useState(false);
+  const [status, setStatus] = useState('processing'); // 'processing', 'animating', 'redirecting'
 
   useEffect(() => {
+    // This effect handles the magic link processing.
+    if (status !== 'processing') return;
+
     const link = window.location.href;
     if (isSignInWithEmailLink(auth, link)) {
       const email = window.localStorage.getItem('emailForSignIn');
-      
       if (email) {
         completeSignInWithEmailLink(email, link).catch(error => {
           console.error("Failed to sign in with email link", error);
-          // If there's an error (e.g., link expired), send to login
           router.replace('/login');
         });
+        // The onAuthStateChanged listener in useAuth will handle the next steps.
       } else {
-        // Email not found in storage. This happens on a different device/browser.
-        // Instead of prompting, redirect to login to restart the flow.
+        // Email not found means different browser/device.
         router.replace('/login');
       }
     } else {
-      // Not a magic link, proceed to check auth state
-      setIsProcessingLink(false);
+        // If it's not a magic link, we rely on the next effect to check the user's auth state.
+        if (!isSigningIn && !loading) {
+            if (user) {
+                setStatus('animating');
+            } else {
+                router.replace('/login');
+            }
+        }
     }
-  }, [completeSignInWithEmailLink, router]);
-  
+  }, [completeSignInWithEmailLink, router, status, isSigningIn, loading, user]);
+
   useEffect(() => {
-    // This effect runs once the auth state is confirmed and any link has been processed
-    if (!loading && !isSigningIn) {
-      if (user) {
-        // User is logged in, prepare to show animation or redirect.
-        setIsProcessingLink(false);
-        setShowAnimation(true);
-      } else if (!isProcessingLink) {
-        // If not logged in and not in the middle of processing a link, go to login.
-        router.replace('/login');
-      }
+    // This effect transitions from processing to animating once the user is available.
+    if (status === 'processing' && !loading && !isSigningIn && user) {
+      setStatus('animating');
     }
-  }, [user, loading, isSigningIn, isProcessingLink, router]);
+  }, [user, loading, isSigningIn, status]);
 
-
-  // Show a loading spinner while processing the magic link or waiting for the auth state
-  if (isProcessingLink || loading || isSigningIn) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center bg-background">
-        <Loader2 className="h-12 w-12 animate-spin text-primary" />
-      </div>
-    );
-  }
-
-  // Once loading is done and we have a user, show the animation
-  if (showAnimation) {
+  if (status === 'animating') {
     return (
       <div className="h-screen w-screen flex items-center justify-center bg-background overflow-hidden">
         <WelcomeAnimation onAnimationComplete={() => router.replace('/dashboard')} />
       </div>
     );
   }
-
-  // Fallback, in case user is not logged in after all checks, redirect.
-  // This state should ideally not be reached if logic is correct.
-  if (!user && !loading && !isProcessingLink && !isSigningIn) {
-    router.replace('/login');
-  }
-
-  return null;
+  
+  // Show a loading spinner during the initial processing phase.
+  return (
+    <div className="h-screen w-screen flex items-center justify-center bg-background">
+      <Loader2 className="h-12 w-12 animate-spin text-primary" />
+    </div>
+  );
 }
