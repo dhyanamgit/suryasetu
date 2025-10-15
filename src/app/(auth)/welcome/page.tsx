@@ -18,23 +18,22 @@ export default function WelcomePage() {
   useEffect(() => {
     const link = window.location.href;
     if (isSignInWithEmailLink(auth, link)) {
-      let email = window.localStorage.getItem('emailForSignIn');
-      if (!email) {
-        // This can happen if the user opens the link on a different device.
-        email = window.prompt('Please provide your email for confirmation');
-      }
+      const email = window.localStorage.getItem('emailForSignIn');
       
       if (email) {
         completeSignInWithEmailLink(email, link).catch(error => {
           console.error("Failed to sign in with email link", error);
+          // If there's an error (e.g., link expired), send to login
           router.replace('/login');
         });
       } else {
-        // No email provided, redirect to login.
+        // Email not found in storage. This happens on a different device/browser.
+        // Instead of prompting, redirect to login to restart the flow.
         router.replace('/login');
       }
     } else {
-        setIsProcessingLink(false);
+      // Not a magic link, proceed to check auth state
+      setIsProcessingLink(false);
     }
   }, [completeSignInWithEmailLink, router]);
   
